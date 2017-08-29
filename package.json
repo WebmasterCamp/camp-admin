@@ -1,0 +1,26 @@
+{
+  "name": "grader",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^2.12.2",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.0",
+    "react-scripts": "1.0.10",
+    "redux": "^3.7.2",
+    "redux-define": "^1.1.1",
+    "styled-components": "^2.1.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  }
+}
