@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card } from 'antd';
 import styled from 'styled-components';
 
 import Routes from './Routes';
+import Login from './pages/auth/Login';
+import Loading from './pages/Loading';
 import { actions as authActions } from './ducks/auth';
 
 const AppContainer = styled.div`
@@ -17,7 +18,10 @@ class App extends Component {
 
   render() {
     if (!this.props.isCheckedUser) {
-      return <h1>Wating...</h1>
+      return <Loading />;
+    }
+    if (!this.props.isLoggedIn) {
+      return <Login />;
     }
     return (
       <AppContainer>
@@ -30,6 +34,7 @@ class App extends Component {
 export default connect(
   state => ({
     isCheckedUser: state.auth.isCheckedUser,
+    isLoggedIn: state.auth.isLoggedIn
   }),
   { ...authActions }
 )(App);

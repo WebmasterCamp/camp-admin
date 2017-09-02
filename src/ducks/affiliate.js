@@ -41,14 +41,20 @@ export const actions = {
   }),
   approveAffiliateItem: id => dispatch => ({
     type: APPROVE_ITEM,
-    promise: api.put(`/affiliates/${id}/approved`)
-      .then(() => message.success('Affiliate successfully approved.'))
+    promise: api.put(`/affiliates/${id}/approved`, { approved: true })
       .then(dispatch(actions.getAffiliate()))
+      .then(() => message.success('Affiliate item has been approved.'))
+  }),
+  unapproveAffiliateItem: id => dispatch => ({
+    type: APPROVE_ITEM,
+    promise: api.put(`/affiliates/${id}/approved`, { approved: false })
+      .then(dispatch(actions.getAffiliate()))
+      .then(() => message.success('Affiliate item has been unapproved.'))
   }),
   deleteAffiliateItem: id => dispatch => ({
     type: APPROVE_ITEM,
     promise: api.delete(`/affiliates/${id}`)
-      .then(() => message.success('Affiliate has been delete.'))
       .then(dispatch(actions.getAffiliate()))
+      .then(() => message.success('Affiliate item has been delete.'))
   }),
 };

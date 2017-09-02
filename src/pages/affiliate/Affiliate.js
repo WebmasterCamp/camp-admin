@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Popconfirm, message } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import { compose, lifecycle, withProps } from 'recompose';
 import { connect } from 'react-redux';
 
@@ -69,7 +69,7 @@ const approvedTableAction = (props) => ({
       </Popconfirm>
       <Popconfirm
         title="Are you sure?"
-        onConfirm={() => console.log(props)}
+        onConfirm={() => props.deleteAffiliateItem(item.id)}
         okText="Yes"
         cancelText="No"
       >
@@ -83,11 +83,11 @@ const unapprovedTableAction = (props) => ({
   title: 'Action',
   key: 'action',
   width: 250,
-  render: () => (
+  render: (text, item) => (
     <ActionSpan>
       <Popconfirm
         title="Are you sure?"
-        onConfirm={() => console.log(props)}
+        onConfirm={() => props.unapproveAffiliateItem(item.id)}
         okText="Yes"
         cancelText="No"
       >
@@ -95,7 +95,7 @@ const unapprovedTableAction = (props) => ({
       </Popconfirm>
       <Popconfirm
         title="Are you sure?"
-        onConfirm={() => console.log(props)}
+        onConfirm={() => props.deleteAffiliateItem(item.id)}
         okText="Yes"
         cancelText="No"
       >

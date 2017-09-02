@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, Layout } from 'antd';
 import { connect } from 'react-redux';
 import { compose, withState, withProps } from 'recompose';
+import styled from 'styled-components';
 
 import { actions as authActions } from '../../ducks/auth';
 
@@ -27,11 +28,44 @@ const enhance = compose(
   )
 );
 
+const Container = styled.div`
+  display: flex;
+  background: #ccc;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #404040;  
+`;
+
+const FormContainer = styled(Form).attrs({
+  className: 'login-form'
+})`
+  width: 300px;
+  > div {
+    margin-bottom: 15px;
+  }
+`;
+
+const BrandingImg = styled.img.attrs({
+  src: require('../../img/logo.png'),
+  alt: 'branding'
+})`
+  width: 280px;
+  display: block;
+  margin: 0 auto;
+`;
+
+const Title = styled.h1`
+  color: white;
+  margin-bottom: 10px;
+`;
+
 const Login = props => (
-  <div>
-    <h1>YWC15 Admin System</h1>
-    {JSON.stringify(props.user)}
-    <Form onSubmit={props.handleLogin} className="login-form">
+  <Container>
+    <BrandingImg />
+    <Title>YWC15 Admin System</Title>
+    <FormContainer onSubmit={props.handleLogin}>
       <FormItem>
         <Input
           onChange={e => props.setUsername(e.target.value)}
@@ -53,8 +87,8 @@ const Login = props => (
           Log in
         </Button>
       </FormItem>
-    </Form>
-  </div>
+    </FormContainer>
+  </Container>
 );
 
 export default enhance(Login);
