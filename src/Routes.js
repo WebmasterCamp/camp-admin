@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd';
 import styled from 'styled-components';
 
@@ -36,10 +36,10 @@ const Routes = props => (
         collapsed={false}
       >
         <BrandingImg />
-        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+        <Menu theme="dark" mode="inline">
           <Menu.Item key="1">
             <Link to="/overview">
-              <Icon type="edit" />
+              <Icon type="area-chart" />
               <span>Overview</span>
             </Link> 
           </Menu.Item>
@@ -57,7 +57,7 @@ const Routes = props => (
           </Menu.Item>}
           {props.user.role === 'admin' && <Menu.Item key="4">
             <Link to="/affiliate">
-              <Icon type="video-camera" />
+              <Icon type="link" />
               <span>Affiliate</span>
             </Link>
           </Menu.Item>}
