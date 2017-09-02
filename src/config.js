@@ -1,6 +1,6 @@
 const commonConfig = {
   isProduction: false,
-  apiPath: 'http://staging.api.ywc15.ywc.in.th',
+  apiPath: 'https://staging.api.ywc15.ywc.in.th',
 };
 
 const environmentConfig = {
@@ -10,7 +10,7 @@ const environmentConfig = {
   },
   production: {
     isProduction: true,
-    apiPath: 'http://api.ywc15.ywc.in.th',
+    apiPath: 'https://api.ywc15.ywc.in.th',
   }
 };
 

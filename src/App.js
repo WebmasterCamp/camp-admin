@@ -4,13 +4,21 @@ import { Card } from 'antd';
 import styled from 'styled-components';
 
 import Routes from './Routes';
+import { actions as authActions } from './ducks/auth';
 
 const AppContainer = styled.div`
   height: 100%;
 `;
 
 class App extends Component {
+  componentDidMount() {
+    this.props.checkUser();
+  }
+
   render() {
+    if (!this.props.isCheckedUser) {
+      return <h1>Wating...</h1>
+    }
     return (
       <AppContainer>
         <Routes />
@@ -21,6 +29,7 @@ class App extends Component {
 
 export default connect(
   state => ({
-    isLoggedIn: state.auth.isLoggedIn
-  })
+    isCheckedUser: state.auth.isCheckedUser,
+  }),
+  { ...authActions }
 )(App);

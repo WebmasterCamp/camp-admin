@@ -5,13 +5,13 @@ function createApiInstance() {
   return axios.create({
     baseURL: config.apiPath,
     headers: {
-      'x-access-token': window.localStorage.getItem('ywc15Token') || ''
+      'x-access-token': window.localStorage.getItem('ywc15AdminToken') || ''
     }
   });
 }
 
 function handleResponse(response) {
-  if (response.statusText === 'OK' && response.data) {
+  if (response.data) {
     return response;
   }
   return Promise.reject(response.error);
@@ -44,6 +44,16 @@ export default {
       .request({
         url: path,
         method: 'PUT',
+        data: body,
+      })
+      .then(handleResponse)
+      .catch(catchError)
+  ),
+  delete: (path, body = {}) => (
+    createApiInstance()
+      .request({
+        url: path,
+        method: 'DELETE',
         data: body,
       })
       .then(handleResponse)
