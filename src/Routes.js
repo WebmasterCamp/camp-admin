@@ -7,7 +7,9 @@ import styled from 'styled-components';
 import { actions as authActions } from './ducks/auth';
 import Overview from './pages/Overview';
 import Grading from './pages/grading/Grading';
-import Registrants from './pages/users/Registrant';
+import Registrants from './pages/Registrant/Registrants';
+import Registrant from './pages/Registrant/Registrant';
+import Users from './pages/users/Users';
 import User from './pages/users/User';
 import Affiliate from './pages/affiliate/Affiliate';
 
@@ -50,18 +52,24 @@ const Routes = props => (
             </Link> 
           </Menu.Item>
           {props.user.role === 'admin' && <Menu.Item key="3">
-            <Link to="/user">
-              <Icon type="user" />
+            <Link to="/registrants">
+              <Icon type="team" />
               <span>Registrant</span>
             </Link>
           </Menu.Item>}
           {props.user.role === 'admin' && <Menu.Item key="4">
+            <Link to="/user">
+              <Icon type="user" />
+              <span>User</span>
+            </Link>
+          </Menu.Item>}
+          {props.user.role === 'admin' && <Menu.Item key="5">
             <Link to="/affiliate">
               <Icon type="link" />
               <span>Affiliate</span>
             </Link>
           </Menu.Item>}
-          <Menu.Item key="5">
+          <Menu.Item key="6">
             <a onClick={() => props.logout()}>
               <Icon type="poweroff" />
               <span>Logout</span>
@@ -73,7 +81,9 @@ const Routes = props => (
         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
           <Route path="/overview" exact component={Overview} />
           <Route path="/grading" exact component={Grading} />
-          <Route path="/user" exact component={Registrants} />
+          <Route path="/registrants" exact component={Registrants} />
+          <Route path="/registrant" exact component={Registrant} />
+          <Route path="/user" exact component={Users} />
           <Route path="/user/:id" exact component={User} />
           <Route path="/affiliate" exact component={Affiliate} />
         </Content>
