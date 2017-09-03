@@ -28,7 +28,7 @@ const columns = [{
 {
   title: 'Status',
   key: 'status',
-  render: (text, record) => (
+  render: (text, record) => ( 
     <span>
       <Tag color="#87d068">Done</Tag>
     </span>
