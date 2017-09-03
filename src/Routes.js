@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { actions as authActions } from './ducks/auth';
 import Overview from './pages/Overview';
 import Grading from './pages/grading/Grading';
-import Users from './pages/users/Users';
+import Registrants from './pages/users/Registrant';
 import User from './pages/users/User';
 import Affiliate from './pages/affiliate/Affiliate';
 
@@ -73,7 +73,7 @@ const Routes = props => (
         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
           <Route path="/overview" exact component={Overview} />
           <Route path="/grading" exact component={Grading} />
-          <Route path="/user" exact component={Users} />
+          <Route path="/user" exact component={Registrants} />
           <Route path="/user/:id" exact component={User} />
           <Route path="/affiliate" exact component={Affiliate} />
         </Content>
