@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, Button } from 'antd';
 
 
-import UserTable from '../../components/User/UserTable';
+import RegistrantTable from '../../components/Registrant/RegistrantTable';
 const TabPane = Tabs.TabPane;
 const data = [
   {
@@ -32,19 +32,19 @@ const Registrants = props => (
     <Tabs>
     <TabPane tab="Web Content (2)" key="1">
       <h2>Web Content</h2>
-      <UserTable data={data} />
+      <RegistrantTable data={data} />
     </TabPane>
     <TabPane tab="Web Design (2)" key="2">
       <h2>Web Design</h2>
-      <UserTable data={data} />
+      <RegistrantTable data={data} />
   </TabPane>
   <TabPane tab="Web Marketing (2)" key="3">
       <h2>Web Marketing</h2>
-      <UserTable data={data} />
+      <RegistrantTable data={data} />
     </TabPane>
     <TabPane tab="Web Programming (2)" key="4">
       <h2>Web Programming</h2>
-      <UserTable data={data} />
+      <RegistrantTable data={data} />
     </TabPane>
   </Tabs>
   </div>
