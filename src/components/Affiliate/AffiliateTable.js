@@ -18,15 +18,16 @@ const enhance = compose(
   
 )
 
-const GradingTable = props => (
+const AffiliateTable = props => (
   <Table
     {...props}
     size="middle"
     bordered
+    pagination={false}
     columns={[...columns, props.action]}
     dataSource={props.data}
     locale={{ emptyText: 'No Affiliate Data to display.' }}
   />
 );
 
-export default enhance(GradingTable);
+export default enhance(AffiliateTable);

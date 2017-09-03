@@ -111,11 +111,11 @@ const Affiliate = props => (
     <h1>Affiliate</h1>
     <TableSection>
       <SectionTitle>Unapproved Affiliate</SectionTitle>
-      <AffiliateTable pagination={false} loading={props.isLoading} data={props.unapprovedAffiliate} action={approvedTableAction(props)} />
+      <AffiliateTable loading={props.isLoading} data={props.unapprovedAffiliate} action={approvedTableAction(props)} />
     </TableSection>
     <TableSection>
       <SectionTitle>Approved Affiliate</SectionTitle>
-      <AffiliateTable pagination={false} loading={props.isLoading} data={props.approvedAffiliate} action={unapprovedTableAction(props)} />
+      <AffiliateTable loading={props.isLoading} data={props.approvedAffiliate} action={unapprovedTableAction(props)} />
     </TableSection>
   </div>
 );

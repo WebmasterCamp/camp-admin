@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link, withRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd';
 import styled from 'styled-components';
 
@@ -10,6 +10,7 @@ import Grading from './pages/grading/Grading';
 import Users from './pages/users/Users';
 import User from './pages/users/User';
 import Affiliate from './pages/affiliate/Affiliate';
+import UserManagement from './pages/user-management/UserManagement';
 
 const { Sider, Content } = Layout;
 
@@ -61,7 +62,13 @@ const Routes = props => (
               <span>Affiliate</span>
             </Link>
           </Menu.Item>}
-          <Menu.Item key="5">
+          {props.user.role === 'admin' && <Menu.Item key="5">
+            <Link to="/user-management">
+              <Icon type="link" />
+              <span>User Management</span>
+            </Link>
+          </Menu.Item>}
+          <Menu.Item key="6">
             <a onClick={() => props.logout()}>
               <Icon type="poweroff" />
               <span>Logout</span>
@@ -76,6 +83,7 @@ const Routes = props => (
           <Route path="/user" exact component={Users} />
           <Route path="/user/:id" exact component={User} />
           <Route path="/affiliate" exact component={Affiliate} />
+          <Route path="/user-management" exact component={UserManagement} />
         </Content>
       </Layout>
     </StyledLayout>
