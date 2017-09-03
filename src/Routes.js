@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd';
 import styled from 'styled-components';
 
@@ -11,6 +11,8 @@ import Users from './pages/users/Users';
 import User from './pages/users/User';
 import Affiliate from './pages/affiliate/Affiliate';
 import UserManagement from './pages/user-management/UserManagement';
+import Logout from './pages/auth/Logout';
+import Login from './pages/auth/Login';
 
 const { Sider, Content } = Layout;
 
@@ -38,18 +40,18 @@ const Routes = props => (
       >
         <BrandingImg />
         <Menu theme="dark" mode="inline">
-          <Menu.Item key="1">
+          {props.isLoggedIn && <Menu.Item key="1">
             <Link to="/overview">
               <Icon type="area-chart" />
               <span>Overview</span>
             </Link> 
-          </Menu.Item>
-          <Menu.Item key="2">
+          </Menu.Item>}
+          {['designer', 'marketing', 'programming', 'content'].indexOf(props.user.role) !== -1 && <Menu.Item key="2">
             <Link to="/grading">
               <Icon type="edit" />
               <span>Grading</span>
             </Link> 
-          </Menu.Item>
+          </Menu.Item>}
           {props.user.role === 'admin' && <Menu.Item key="3">
             <Link to="/user">
               <Icon type="user" />
@@ -64,26 +66,37 @@ const Routes = props => (
           </Menu.Item>}
           {props.user.role === 'admin' && <Menu.Item key="5">
             <Link to="/user-management">
-              <Icon type="link" />
-              <span>User Management</span>
+              <Icon type="user" />
+              <span>Admin Management</span>
             </Link>
           </Menu.Item>}
-          <Menu.Item key="6">
-            <a onClick={() => props.logout()}>
+          {props.isLoggedIn && <Menu.Item key="6">
+            <Link to="/logout">
               <Icon type="poweroff" />
               <span>Logout</span>
-            </a>
-          </Menu.Item>
+            </Link>
+          </Menu.Item>}
         </Menu>
       </Sider>
       <Layout>
         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-          <Route path="/overview" exact component={Overview} />
-          <Route path="/grading" exact component={Grading} />
-          <Route path="/user" exact component={Users} />
-          <Route path="/user/:id" exact component={User} />
-          <Route path="/affiliate" exact component={Affiliate} />
-          <Route path="/user-management" exact component={UserManagement} />
+          <Route path="/logout" exact component={Logout} />
+          <Route path="/" exact component={Login} />
+          {props.user.role === 'admin' && (
+            <div>
+              <Route path="/overview" exact component={Overview} />
+              <Route path="/user" exact component={Users} />
+              <Route path="/user/:id" exact component={User} />
+              <Route path="/affiliate" exact component={Affiliate} />
+              <Route path="/user-management" exact component={UserManagement} />
+            </div>
+          )}
+          {['designer', 'marketing', 'programming', 'content', 'stage-1', 'stage-2'].indexOf(props.user.role) !== -1 && (
+            <div>
+              <Route path="/grading" exact component={Grading} />
+            </div>
+          )}
+          <Redirect from='*' to='/' />
         </Content>
       </Layout>
     </StyledLayout>
@@ -92,7 +105,8 @@ const Routes = props => (
 
 export default connect(
   state => ({
-    user: state.auth.user
+    user: state.auth.user,
+    isLoggedIn: state.auth.isLoggedIn,
   }),
   { ...authActions }
 )(Routes);

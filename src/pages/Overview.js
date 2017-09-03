@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Card, Col, Row } from 'antd';
 
+import { redirectIfNotLoggedIn } from '../utils/redirect';
 import { actions as overviewActions } from '../ducks/overview';
 
 const enhance = compose(
+  redirectIfNotLoggedIn,
   connect(
     state => ({
       stat: state.overview.stat

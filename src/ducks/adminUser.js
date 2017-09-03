@@ -7,6 +7,7 @@ const adminUserAction = actionCreator('adminUser');
 
 const GET_ADMIN_USER = adminUserAction('GET_ADMIN_USER', true);
 const CREATE_ADMIN_USER = adminUserAction('CREATE_ADMIN_USER', true);
+const DELETE_ADMIN_USER = adminUserAction('DELETE_ADMIN_USER', true);
 
 const initialState = {
   isLoading: true,
@@ -35,5 +36,11 @@ export const actions = {
     promise: api.post('/admin', { username, password, role })
       .then(dispatch(actions.getAdminUser()))
       .then(() => message.success('New Admin user has been create.'))
+  }),
+  deleteAdminUser: (id) => dispatch => ({
+    type: DELETE_ADMIN_USER,
+    promise: api.delete(`/admin/${id}`)
+      .then(dispatch(actions.getAdminUser()))
+      .then(() => message.success('Admin user has been deleted.'))
   })
 };

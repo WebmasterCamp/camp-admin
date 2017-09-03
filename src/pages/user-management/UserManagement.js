@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { Button, Table, Input, Popconfirm, Select } from 'antd';
 import styled from 'styled-components';
 
+import { redirectIfNotLoggedIn } from '../../utils/redirect';
 import { actions as adminUserActions } from '../../ducks/adminUser';
 
 const enhance = compose(
+  redirectIfNotLoggedIn,
   connect(
     state => ({
       isLoading: state.adminUser.isLoading,
@@ -14,12 +16,13 @@ const enhance = compose(
     }),
     { ...adminUserActions }
   ),
-  withState('username', 'setUsername', ''),
+withState('username', 'setUsername', ''),
   withState('password', 'setPassword', ''),
   withState('role', 'setRole', ''),
   withProps(
     ownProps => ({
       users: ownProps.users.map(user => ({
+        id: user._id,
         key: user._id,
         username: user.username,
         role: user.role
@@ -53,7 +56,7 @@ const ActionSpan = styled.div`
   }
 `;
 
-const columns = [{
+const createColumns = (props) => [{
   title: 'Username',
   dataIndex: 'username',
   key: 'username',
@@ -63,8 +66,15 @@ const columns = [{
   key: 'role',
 }, {
   title: 'Action',
-  render: () => (
-    <Button type="danger" icon="delete">Delete</Button>
+  render: (text, item) => (
+    <Popconfirm
+      title="Are you sure?"
+      onConfirm={() => props.deleteAdminUser(item.id)}
+      okText="Yes"
+      cancelText="No"
+    >
+      <Button type="danger" icon="delete">Delete</Button>
+    </Popconfirm>
   )
 }];
 
@@ -95,7 +105,7 @@ const UserManagement = props => (
         <Button type="primary" icon="plus-circle">Add</Button>
       </Popconfirm>
     </ActionSpan>
-    <Table loading={props.isLoading} size="middle" bordered columns={columns} dataSource={props.users} />
+    <Table loading={props.isLoading} size="middle" bordered columns={createColumns(props)} dataSource={props.users} />
   </div>
 );
 
