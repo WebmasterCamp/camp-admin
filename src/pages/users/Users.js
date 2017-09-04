@@ -47,10 +47,6 @@ const Users = props => (
       <h2>Web Programming</h2>
       <UserTable data={data} />
     </TabPane>
-    <TabPane tab="Admin" key="5">
-      <h2>Admin</h2>
-      <UserTable data={data} />
-    </TabPane>
   </Tabs>
   </div>
   

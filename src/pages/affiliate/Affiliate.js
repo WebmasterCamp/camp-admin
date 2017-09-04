@@ -5,6 +5,7 @@ import { compose, lifecycle, withProps } from 'recompose';
 import { connect } from 'react-redux';
 
 import AffiliateTable from '../../components/Affiliate/AffiliateTable';
+import { redirectIfNotLoggedIn } from '../../utils/redirect';
 import { actions as affiliateActions } from '../../ducks/affiliate';
 
 const SectionTitle = styled.h2`
@@ -22,6 +23,7 @@ const ActionSpan = styled.span`
 `;
 
 const enhance = compose(
+  redirectIfNotLoggedIn,
   connect(
     state => ({
       approvedAffiliate: state.affiliate.approvedAffiliate,
@@ -105,17 +107,16 @@ const unapprovedTableAction = (props) => ({
   )
 });
 
-
 const Affiliate = props => (
   <div>
     <h1>Affiliate</h1>
     <TableSection>
       <SectionTitle>Unapproved Affiliate</SectionTitle>
-      <AffiliateTable pagination={false} loading={props.isLoading} data={props.unapprovedAffiliate} action={approvedTableAction(props)} />
+      <AffiliateTable loading={props.isLoading} data={props.unapprovedAffiliate} action={approvedTableAction(props)} />
     </TableSection>
     <TableSection>
       <SectionTitle>Approved Affiliate</SectionTitle>
-      <AffiliateTable pagination={false} loading={props.isLoading} data={props.approvedAffiliate} action={unapprovedTableAction(props)} />
+      <AffiliateTable loading={props.isLoading} data={props.approvedAffiliate} action={unapprovedTableAction(props)} />
     </TableSection>
   </div>
 );

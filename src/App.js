@@ -20,9 +20,6 @@ class App extends Component {
     if (!this.props.isCheckedUser) {
       return <Loading />;
     }
-    if (!this.props.isLoggedIn) {
-      return <Login />;
-    }
     return (
       <AppContainer>
         <Routes />

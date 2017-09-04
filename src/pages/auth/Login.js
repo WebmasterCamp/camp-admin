@@ -1,14 +1,18 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Layout } from 'antd';
+import { Form, Icon, Input, Button, Layout, message } from 'antd';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { compose, withState, withProps } from 'recompose';
 import styled from 'styled-components';
 
+import { redirectIfLoggedIn } from '../../utils/redirect';
 import { actions as authActions } from '../../ducks/auth';
 
 const FormItem = Form.Item;
 
 const enhance = compose(
+  redirectIfLoggedIn,
+  withRouter,
   connect(
     state => ({
       user: state.auth.user
@@ -22,7 +26,15 @@ const enhance = compose(
       handleLogin: e => {
         e.preventDefault();
         const { username, password } = ownProps;
-        ownProps.login(username, password);
+        ownProps.login(username, password)
+          .then((resp) => {
+            if (resp.data.role === 'admin') {
+              ownProps.history.push('/overview');
+            } else {
+              ownProps.history.push('/grading');
+            }
+          })
+          .catch(() => message.error('Login Error'))
       }
     })
   )
@@ -30,12 +42,10 @@ const enhance = compose(
 
 const Container = styled.div`
   display: flex;
-  background: #ccc;
   height: 100%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: #404040;  
 `;
 
 const FormContainer = styled(Form).attrs({
@@ -47,23 +57,12 @@ const FormContainer = styled(Form).attrs({
   }
 `;
 
-const BrandingImg = styled.img.attrs({
-  src: require('../../img/logo.png'),
-  alt: 'branding'
-})`
-  width: 280px;
-  display: block;
-  margin: 0 auto;
-`;
-
 const Title = styled.h1`
-  color: white;
   margin-bottom: 10px;
 `;
 
 const Login = props => (
   <Container>
-    <BrandingImg />
     <Title>YWC15 Admin System</Title>
     <FormContainer onSubmit={props.handleLogin}>
       <FormItem>
