@@ -57,8 +57,8 @@ const enhance = compose(
   
 )
 
-const GradingTable = props => (
+const RegistrantTable = props => (
   <Table bordered columns={columns} dataSource={props.data} />
 );
 
-export default enhance(GradingTable);
+export default enhance(RegistrantTable);
