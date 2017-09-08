@@ -21,7 +21,7 @@ const enhance = compose(
         const { role } = this.props.user;
         if (role === 'admin') {
           this.props.history.push('/overview');
-        } else if (role === 'design' || role === 'marketing' || role === 'content' || role === 'programming') {
+        } else if (role === 'design' || role === 'marketing' || role === 'content' || role === 'programming' || role === 'stage-1') {
           this.props.history.push('/grading');
         }
       } else {

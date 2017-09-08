@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { actions as authActions } from './ducks/auth';
 import Overview from './pages/Overview';
 import Grading from './pages/grading/Grading';
+import StageOneGrading from './pages/grading/StageOne/StageOneGrading';
+import StageOneList from './pages/grading/StageOne/StageOneList';
 import Users from './pages/users/Users';
 import User from './pages/users/User';
 import Affiliate from './pages/affiliate/Affiliate';
@@ -47,7 +49,7 @@ const Routes = props => (
               <span>Overview</span>
             </Link> 
           </Menu.Item>}
-          {['designer', 'marketing', 'programming', 'content'].indexOf(props.user.role) !== -1 && <Menu.Item key="2">
+          {['designer', 'marketing', 'programming', 'content', 'stage-1'].indexOf(props.user.role) !== -1 && <Menu.Item key="2">
             <Link to="/grading">
               <Icon type="edit" />
               <span>Grading</span>
@@ -92,7 +94,13 @@ const Routes = props => (
               <Route path="/user-management" exact component={UserManagement} />
             </div>
           )}
-          {['designer', 'marketing', 'programming', 'content', 'stage-1', 'stage-2'].indexOf(props.user.role) !== -1 && (
+          {props.user.role === 'stage-1' && (
+            <div>
+              <Route path="/grading" exact component={StageOneList} />
+              <Route path="/grading/:id" exact component={StageOneGrading} />
+            </div>
+          )}
+          {['designer', 'marketing', 'programming', 'content'].indexOf(props.user.role) !== -1 && (
             <div>
               <Route path="/grading" exact component={Grading} />
             </div>
