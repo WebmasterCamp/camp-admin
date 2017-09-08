@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "ywc15-admin",
+      "exec_mode": "fork_mode",
+      "script": "./server.js",
+      "log_date_format"  : "YYYY-MM-DD HH:mm Z"
+    }
+  ]
+}

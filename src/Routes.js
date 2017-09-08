@@ -15,6 +15,7 @@ import Affiliate from './pages/affiliate/Affiliate';
 import UserManagement from './pages/user-management/UserManagement';
 import Logout from './pages/auth/Logout';
 import Login from './pages/auth/Login';
+import Proxying from './pages/Proxying';
 
 const { Sider, Content } = Layout;
 
@@ -92,7 +93,7 @@ const Routes = props => (
       <Layout>
         <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
           <Route path="/logout" exact component={Logout} />
-          <Route path="/" exact component={Login} />
+          <Route path="/login" exact component={Login} />
           {props.user.role === 'admin' && (
             <div>
               <Route path="/overview" exact component={Overview} />
@@ -110,6 +111,7 @@ const Routes = props => (
               <Route path="/grading" exact component={Grading} />
             </div>
           )}
+          <Route path="/" exact component={Proxying} />
           <Redirect from='*' to='/' />
         </Content>
       </Layout>

@@ -5,6 +5,8 @@
   "dependencies": {
     "antd": "^2.12.2",
     "axios": "^0.16.2",
+    "express": "^4.15.4",
+    "pm2": "^2.6.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
@@ -15,10 +17,12 @@
     "redux": "^3.7.2",
     "redux-define": "^1.1.1",
     "redux-thunk": "^2.2.0",
+    "serve": "^6.0.6",
     "styled-components": "^2.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "pm2 start pm2.json",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
