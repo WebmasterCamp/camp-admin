@@ -11,7 +11,7 @@ import { actions as authActions } from '../../ducks/auth';
 const FormItem = Form.Item;
 
 const enhance = compose(
-  redirectIfLoggedIn,
+  // redirectIfLoggedIn,
   withRouter,
   connect(
     state => ({
@@ -61,7 +61,9 @@ const Title = styled.h1`
   margin-bottom: 10px;
 `;
 
-const Login = props => (
+const Login = props => {
+  console.log(props);
+return (
   <Container>
     <Title>YWC15 Admin System</Title>
     <FormContainer onSubmit={props.handleLogin}>
@@ -88,6 +90,6 @@ const Login = props => (
       </FormItem>
     </FormContainer>
   </Container>
-);
+);}
 
 export default enhance(Login);

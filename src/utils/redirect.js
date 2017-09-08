@@ -12,10 +12,10 @@ const authStateConnect = connect(
 
 export const redirectIfLoggedIn = compose(
   authStateConnect,
-  branch(props => props.isCheckedUser && props.isLoggedIn, renderComponent(() => <Redirect to="/overview" />))
+  branch(props => props.isCheckedUser && props.isLoggedIn, renderComponent(() => <Redirect to="/" />))
 );
 
 export const redirectIfNotLoggedIn = compose(
   authStateConnect,
-  branch(props => props.isCheckedUser && !props.isLoggedIn, renderComponent(() => <Redirect to="/" />))
+  branch(props => props.isCheckedUser && !props.isLoggedIn, renderComponent(() => <Redirect to="/login" />))
 );
