@@ -11,8 +11,8 @@ const columns = [{
 },
 {
   title: 'Facebook ID',
-  dataIndex: 'facebookID',
-  key: 'facebookID',
+  dataIndex: 'facebook',
+  key: 'facebook',
   render: text => <p>{text}</p>,
 },
 {
@@ -58,7 +58,12 @@ const enhance = compose(
 )
 
 const RegistrantTable = props => (
-  <Table bordered columns={columns} dataSource={props.data} />
+  <Table {...props} 
+    size="middle"
+    bordered 
+    columns={columns} 
+    dataSource={props.data} 
+    locale={{ emptyText: 'No Registrant Data to display.' }}/>
 );
 
 export default enhance(RegistrantTable);

@@ -15,11 +15,7 @@ const columns = [{
   dataIndex: 'fullname',
   key: 'fullname',
   render: text => <p>{text}</p>,
-}, {
-  title: 'Role',
-  dataIndex: 'role',
-  key: 'role',
-},
+}, 
 {
   title: 'Progress',
   key: 'progress',
