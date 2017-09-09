@@ -61,7 +61,9 @@ export const actions = {
     type: LOGIN,
     promise: api.post('/auth/login/admin', { username, password })
       .then(({ data: { token } }) => window.localStorage.setItem('ywc15AdminToken', token))
-      .then(() => api.get('/admin/me'))
+      .then(() => api.get('/admin/me')),
+    success: 'Login success',
+    error: 'Login Error'
   }),
   logout: () => ({
     type: LOGOUT

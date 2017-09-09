@@ -34,7 +34,6 @@ const enhance = compose(
               ownProps.history.push('/grading');
             }
           })
-          .catch(() => message.error('Login Error'))
       }
     })
   )

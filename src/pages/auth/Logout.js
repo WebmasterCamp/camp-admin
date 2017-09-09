@@ -1,6 +1,4 @@
-import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
 import { compose, lifecycle } from 'recompose';
 
 import { actions as authActions } from '../../ducks/auth';
@@ -13,10 +11,11 @@ const enhance = compose(
   lifecycle({
     componentDidMount() {
       this.props.logout();
+      this.props.history.push('/login');
     }
   })
 );
 
-const Logout = () => <Redirect to="/" />
+const Logout = () => null;
 
 export default enhance(Logout);
