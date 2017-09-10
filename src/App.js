@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'recompose';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Routes from './Routes';
@@ -10,6 +12,17 @@ import { actions as authActions } from './ducks/auth';
 const AppContainer = styled.div`
   height: 100%;
 `;
+
+const enhance = compose(
+  withRouter,
+  connect(
+    state => ({
+      isCheckedUser: state.auth.isCheckedUser,
+      isLoggedIn: state.auth.isLoggedIn
+    }),
+    { ...authActions }
+  )
+);
 
 class App extends Component {
   componentDidMount() {
@@ -28,10 +41,4 @@ class App extends Component {
   }
 }
 
-export default connect(
-  state => ({
-    isCheckedUser: state.auth.isCheckedUser,
-    isLoggedIn: state.auth.isLoggedIn
-  }),
-  { ...authActions }
-)(App);
+export default enhance(App);

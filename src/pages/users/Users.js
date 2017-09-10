@@ -1,9 +1,44 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 import { Tabs, Button } from 'antd';
-
+import { compose, lifecycle, withProps, mapProps } from 'recompose';
 
 import UserTable from '../../components/User/UserTable';
+import { actions as userActions } from '../../ducks/user';
+const enhance = compose(
+  connect(
+    state => ({
+      users: state.user.users,
+    }),
+    { ...userActions, push }
+  ),
+  mapProps(
+    ownProps => ({
+      getUserList: ownProps.getUserList,
+      push: ownProps.push,
+      completedUsers: ownProps.users.filter(user => user.status === 'completed'),
+      pendingUsers: ownProps.users.filter(user => user.status === 'in progress')
+    })
+  ),
+  withProps(
+    ownProps => ({
+      programming: ownProps.completedUsers.filter(user => user.major === 'programming'),
+      design: ownProps.completedUsers.filter(user => user.major === 'design'),
+      marketing: ownProps.completedUsers.filter(user => user.major === 'marketing'),
+      content: ownProps.completedUsers.filter(user => user.major === 'content'),
+      notConfirm: ownProps.pendingUsers.filter(user => user.completed.filter(done => !done).length === 0)
+    })
+  ),
+  lifecycle({
+    componentDidMount() {
+      this.props.getUserList();
+    }
+  })
+);
+
 const TabPane = Tabs.TabPane;
+
 const data = [
   {
     key: 1,
@@ -26,30 +61,32 @@ const data = [
 ];
 
 
-const Users = props => (
-  <div>
-    {/* <h1>Users</h1> */}
-    <Tabs>
-   
-    <TabPane tab="Web Content (2)" key="1">
-      <h2>Web Content</h2>
-      <UserTable data={data} />
-    </TabPane>
-    <TabPane tab="Web Design (2)" key="2">
-      <h2>Web Design</h2>
-      <UserTable data={data} />
-  </TabPane>
-  <TabPane tab="Web Marketing (2)" key="3">
-      <h2>Web Marketing</h2>
-      <UserTable data={data} />
-    </TabPane>
-    <TabPane tab="Web Programming (2)" key="4">
-      <h2>Web Programming</h2>
-      <UserTable data={data} />
-    </TabPane>
-  </Tabs>
-  </div>
-  
-);
+const Users = props => {
+  console.log(props);
+  return (
+    <div>
+      <Tabs>
+        <TabPane tab="Pending" key="1">
+          <UserTable data={data} />
+        </TabPane>
+        <TabPane tab="Not Confirm" key="2">
+          <UserTable data={data} />
+        </TabPane>
+        <TabPane tab="Content" key="3">
+          <UserTable data={data} />
+        </TabPane>
+        <TabPane tab="Design" key="4">
+          <UserTable data={data} />
+        </TabPane>
+        <TabPane tab="Marketing" key="5">
+          <UserTable data={data} />
+        </TabPane>
+        <TabPane tab="Programming" key="6">
+          <UserTable data={data} />
+        </TabPane>
+      </Tabs>
+    </div>
+  );
+}
 
-export default Users;
+export default enhance(Users);

@@ -31,7 +31,7 @@ const enhance = compose(
 )
 
 const UserTable = props => (
-  <Table bordered columns={columns} dataSource={props.data} />
+  <Table size="middle" bordered columns={columns} dataSource={props.data} />
 );
 
 export default enhance(UserTable);

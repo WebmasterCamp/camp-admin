@@ -1,5 +1,3 @@
-import { message } from 'antd';
-
 import actionCreator from '../utils/actionCreator';
 import api from '../utils/api';
 
@@ -16,10 +14,16 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
+    case GET_ADMIN_USER.PENDING:
+      return {
+        ...state,
+        users: [],
+        isLoading: true
+      }
     case GET_ADMIN_USER.RESOLVED:
       return {
         ...state,
-        users: action.data,
+        users: [...action.data],
         isLoading: false
       };
     default: return state;
@@ -34,13 +38,13 @@ export const actions = {
   createAdminUser: (username, password, role) => dispatch => ({
     type: CREATE_ADMIN_USER,
     promise: api.post('/admin', { username, password, role })
-      .then(dispatch(actions.getAdminUser()))
-      .then(() => message.success('New Admin user has been create.'))
+      .then(dispatch(actions.getAdminUser())),
+    success: 'New Admin user has been create'
   }),
   deleteAdminUser: (id) => dispatch => ({
     type: DELETE_ADMIN_USER,
     promise: api.delete(`/admin/${id}`)
-      .then(dispatch(actions.getAdminUser()))
-      .then(() => message.success('Admin user has been deleted.'))
+      .then(dispatch(actions.getAdminUser())),
+    success: 'Admin user has been deleted.'
   })
 };

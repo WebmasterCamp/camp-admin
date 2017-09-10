@@ -1,5 +1,3 @@
-import { message } from 'antd';
-
 import actionCreator from '../utils/actionCreator';
 import api from '../utils/api';
 
@@ -11,16 +9,15 @@ const GET_USER = userAction('GET_USER', true);
 const initialState = {
   isLoading: true,
   userDetail: {},
-  userList: [],
+  users: [],
 };
 
 export default (state = initialState, action) => {
   switch(action.type) {
     case GET_USERS.RESOLVED:
-      const userList = action.data;
       return {
         ...state,
-        userList,
+        users: action.data,
         isLoading: false,        
       };
     case GET_USER.RESOLVED:
