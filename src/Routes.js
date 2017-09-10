@@ -93,9 +93,15 @@ const Routes = props => (
           </Link> 
         </Menu.Item>}
         {props.user.role === 'admin' && <Menu.Item key="3">
-          <Link to="/user">
+          <Link to="/registrant">
             <Icon type="user" />
             <span>Registrant</span>
+          </Link>
+        </Menu.Item>}
+        {props.user.role === 'admin' && <Menu.Item key="3">
+          <Link to="/grading-status">
+            <Icon type="user" />
+            <span>Grading Status</span>
           </Link>
         </Menu.Item>}
         {props.user.role === 'admin' && <Menu.Item key="4">
@@ -126,8 +132,8 @@ const Routes = props => (
         <AdminRoute user={props.user} path="/user" exact component={Users} />
         <AdminRoute user={props.user} path="/user/:id" exact component={User} />
         <AdminRoute user={props.user} path="/affiliate" exact component={Affiliate} />
-        <AdminRoute user={props.user} path="/registrants" exact component={Registrants} />
-        <AdminRoute user={props.user} path="/registrant" exact component={Registrant} />
+        <AdminRoute user={props.user} path="/registrant" exact component={Registrants} />
+        <AdminRoute user={props.user} path="/registrant/:id" exact component={Registrant} />
         <AdminRoute user={props.user} path="/user-management" exact component={UserManagement} />
         <StageOneRoute user={props.user} path="/grading" exact component={StageOneList} />
         <StageOneRoute  user={props.user} path="/grading/:id" exact component={StageOneGrading} />

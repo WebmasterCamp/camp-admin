@@ -1,5 +1,3 @@
-import { message } from 'antd';
-
 import actionCreator from '../utils/actionCreator';
 import api from '../utils/api';
 
@@ -10,34 +8,36 @@ const GET_REGISTRANT = registrantAction('GET_REGISTRANT', true);
 
 const initialState = {
   isLoading: true,
-  registrantDetail: {},
-  webProgrammingRegistrantList: [],
-  webContentRegistrantList: [],
-  webDesignRegistrantList: [],
-  webMarkingRegistrantList: [],
+  isRegistrantLoading: true,
+  registrant: {},
+  registrants: [],
 };
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case GET_REGISTRANTS.RESOLVED:
-      const webProgrammingRegistrantList = action.data; //.filter(item => item.id == 1);
-      const webContentRegistrantList = action.data.filter(item => item.major == "content");
-      const webDesignRegistrantList = action.data.filter(item => item.major == "design");
-      const webMarkingRegistrantList = action.data.filter(item => item.major == "marketing");
+    case GET_REGISTRANTS.PENDING:
       return {
         ...state,
-        webProgrammingRegistrantList,
-        webContentRegistrantList,
-        webDesignRegistrantList,
-        webMarkingRegistrantList,
+        registrants: [],
+        isLoading: true,        
+      };
+    case GET_REGISTRANTS.RESOLVED:
+      return {
+        ...state,
+        registrants: action.data,
         isLoading: false,        
       };
-    case GET_REGISTRANT.RESOLVED:
-      const registrantDetail = action.data;
+    case GET_REGISTRANT.PENDING:
       return {
         ...state,
-        registrantDetail,
-        isLoading: true,
+        registrant: {},
+        isRegistrantLoading: true,
+      }
+    case GET_REGISTRANT.RESOLVED:
+      return {
+        ...state,
+        registrant: action.data,
+        isRegistrantLoading: false,
       }
     default: return state;
   }
@@ -46,10 +46,10 @@ export default (state = initialState, action) => {
 export const actions = {
   getRegistrantList: () => ({
     type: GET_REGISTRANTS,
-    promise: api.get('/users/stat/all')
+    promise: api.get('/users')
   }),
-  getRegistrant: id => dispatch => ({
+  getRegistrant: id  => ({
     type: GET_REGISTRANT,
-    promise: api.get(`/registrant/${id}`)
+    promise: api.get(`/users/${id}`)
   }),
 };

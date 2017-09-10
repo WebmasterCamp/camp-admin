@@ -1,114 +1,98 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Tabs, Button } from 'antd';
-import { compose, lifecycle, withProps } from 'recompose';
-import { connect } from 'react-redux';
+import React from "react";
+import styled from "styled-components";
+import { Tabs, Button } from "antd";
+import { compose, lifecycle, withProps, mapProps } from "recompose";
+import { connect } from "react-redux";
 
-import RegistrantTable from '../../components/Registrant/RegistrantTable';
-import { redirectIfNotLoggedIn } from '../../utils/redirect';
-import { actions as registrantActions } from '../../ducks/registrant';
+import RegistrantTable from "../../components/Registrant/RegistrantTable";
+import { redirectIfNotLoggedIn } from "../../utils/redirect";
+import { actions as registrantActions } from "../../ducks/registrant";
 
 const TabPane = Tabs.TabPane;
-// const data = [
-//   {
-//     key: 1,
-//     id: 1,
-//     facebookID: 9999,
-//     fullname: 'benz',
-//     email: 'benz@gmail.com',
-//     status: 'Done',
-//     role: 'Admin'
-//   },
-//   {
-//     key: 2,
-//     id: 2,
-//     facebookID: 9999,
-//     fullname: 'Jitta',
-//     email: 'benz@gmail.com',
-//     status: 'Done',
-//     role: 'Judge in Designer'
-//   }
-// ];
+
+const mapUserToTableData = user => ({
+  key: user._id,
+  id: user._id,
+  fullname: user.title + "" + user.firstName + " " + user.lastName,
+  email: user.email
+});
 
 const enhance = compose(
-  redirectIfNotLoggedIn,
   connect(
     state => ({
-      webProgrammingRegistrantList: state.registrant.webProgrammingRegistrantList,
-      webContentRegistrantList: state.registrant.webContentRegistrantList,
-      webDesignRegistrantList: state.registrant.webDesignRegistrantList,
-      webMarkingRegistrantList: state.registrant.webMarkingRegistrantList,
+      registrants: state.registrant.registrants,
       isLoading: state.registrant.isLoading
     }),
-    {...registrantActions}
+    { ...registrantActions }
   ),
-  withProps(
-    ownProps => ({
-      webProgrammingRegistrantList: ownProps.webProgrammingRegistrantList.map((item) => ({
-        key: item.grader_id,
-        id: item.grader_id,
-        facebook: item.facebook,
-        status: item.status,
-        fullname : item.title + "" + item.firstName + " " + item.lastName,
-        email : item.email,
-      })),
-      webContentRegistrantList: ownProps.webContentRegistrantList.map((item) => ({
-        key: item.grader_id,
-        id: item.grader_id,
-        facebook: item.facebook,
-        status: item.status,
-        fullname : item.title + "" + item.firstName + " " + item.lastName,
-        email : item.email,
-      })),
-      webProgrammingRegistrantList: ownProps.webProgrammingRegistrantList.map((item) => ({
-        key: item.grader_id,
-        id: item.grader_id,
-        facebook: item.facebook,
-        status: item.status,
-        fullname : item.title + "" + item.firstName + " " + item.lastName,
-        email : item.email,
-      })),
-      webProgrammingRegistrantList: ownProps.webProgrammingRegistrantList.map((item) => ({
-        key: item.grader_id,
-        id: item.grader_id,
-        facebook: item.facebook,
-        status: item.status,
-        fullname : item.title + "" + item.firstName + " " + item.lastName,
-        email : item.email,
-      }))
-    })
-  ),
+  mapProps(ownProps => ({
+    getRegistrantList: ownProps.getRegistrantList,
+    push: ownProps.push,
+    completedRegistrants: ownProps.registrants.filter(
+      user => user.status === "completed"
+    ),
+    pendingRegistrants: ownProps.registrants.filter(
+      user => user.status === "in progress"
+    )
+  })),
+  withProps(ownProps => ({
+    programming: ownProps.completedRegistrants.filter(
+      user => user.major === "programming"
+    ),
+    design: ownProps.completedRegistrants.filter(
+      user => user.major === "design"
+    ),
+    marketing: ownProps.completedRegistrants.filter(
+      user => user.major === "marketing"
+    ),
+    content: ownProps.completedRegistrants.filter(
+      user => user.major === "content"
+    ),
+    notConfirm: ownProps.pendingRegistrants.filter(
+      user => user.completed.filter(done => !done).length === 0
+    ),
+    pending: ownProps.pendingRegistrants.filter(
+      user => user.completed.filter(done => !done).length !== 0
+    )
+  })),
+  withProps(ownProps => ({
+    programming: ownProps.programming.map(mapUserToTableData),
+    design: ownProps.design.map(mapUserToTableData),
+    marketing: ownProps.marketing.map(mapUserToTableData),
+    content: ownProps.content.map(mapUserToTableData),
+    notConfirm: ownProps.notConfirm.map(mapUserToTableData),
+    pending: ownProps.pending.map(mapUserToTableData)
+  })),
   lifecycle({
     componentDidMount() {
       this.props.getRegistrantList();
     }
-  }),
+  })
 );
-
 
 const Registrants = props => (
   <div>
-    {/* <h1>Users</h1> */}
     <Tabs>
-    <TabPane tab="Web Content (2)" key="1">
-      <h2>Web Content</h2>
-      <RegistrantTable loading={props.isLoading} data={props.webContentRegistrantList} />
-    </TabPane>
-    <TabPane tab="Web Design (2)" key="2">
-      <h2>Web Design</h2>
-      <RegistrantTable loading={props.isLoading} data={props.webDesignRegistrantList} />
-  </TabPane>
-  <TabPane tab="Web Marketing (2)" key="3">
-      <h2>Web Marketing</h2>
-      <RegistrantTable loading={props.isLoading} data={props.webMarkingRegistrantList} />
-    </TabPane>
-    <TabPane tab="Web Programming (2)" key="4">
-      <h2>Web Programming</h2>
-      <RegistrantTable loading={props.isLoading} data={props.webProgrammingRegistrantList} />
-    </TabPane>
-  </Tabs>
+      <TabPane tab={`Not Confirm (${props.notConfirm.length})`} key="notConfirm">
+        <RegistrantTable loading={props.isLoading} data={props.notConfirm} />
+      </TabPane>
+      <TabPane tab={`Pending (${props.pending.length})`} key="pending">
+        <RegistrantTable loading={props.isLoading} data={props.pending} />
+      </TabPane>
+      <TabPane tab={`Content (${props.content.length})`} key="content">
+        <RegistrantTable loading={props.isLoading} data={props.content} />
+      </TabPane>
+      <TabPane tab={`Design (${props.design.length})`} key="design">
+        <RegistrantTable loading={props.isLoading} data={props.design} />
+      </TabPane>
+      <TabPane tab={`Marketing (${props.marketing.length})`} key="marketing">
+        <RegistrantTable loading={props.isLoading} data={props.marketing} />
+      </TabPane>
+      <TabPane tab={`Programming (${props.programming.length})`} key="programming">
+        <RegistrantTable loading={props.isLoading} data={props.programming} />
+      </TabPane>
+    </Tabs>
   </div>
-  
 );
 
-export default Registrants;
+export default enhance(Registrants);

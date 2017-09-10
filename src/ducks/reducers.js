@@ -4,6 +4,7 @@ import overview from './overview';
 import adminUser from './adminUser';
 import grading from './grading';
 import user from './user';
+import registrant from './registrant';
 
 export default {
   auth,
@@ -11,5 +12,6 @@ export default {
   overview,
   adminUser,
   grading,
-  user
+  user,
+  registrant
 };
