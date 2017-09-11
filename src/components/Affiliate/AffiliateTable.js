@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Icon, Button } from 'antd';
+import { Table } from 'antd';
 import { compose } from 'recompose';
 
 const columns = [{

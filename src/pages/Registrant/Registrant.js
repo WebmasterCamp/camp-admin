@@ -1,14 +1,14 @@
-import React from "react";
-import { compose, withProps, lifecycle } from "recompose";
-import { connect } from "react-redux";
-import { Tabs, Icon } from "antd";
-import styled from "styled-components";
+import React from 'react';
+import { compose, withProps, lifecycle } from 'recompose';
+import { connect } from 'react-redux';
+import { Tabs, Icon } from 'antd';
+import styled from 'styled-components';
 
-import { actions as registrantActions } from "../../ducks/registrant";
+import { actions as registrantActions } from '../../ducks/registrant';
 import RegistrantProfile from '../../components/Registrant/RegistrantProfile';
 import QuestionCard from '../../components/Registrant/QuestionCard';
 import questions from '../grading/questions.json';
-import { majorAsText } from '../../utils/helpers';
+import { majorAsText, getPdfPath } from '../../utils/helpers';
 
 const TabPane = Tabs.TabPane;
 const { generalQuestions, specialQuestions } = questions;
@@ -59,6 +59,15 @@ const Registrant = props => {
           {completedMajor && majorAnswers[completedMajor].map((answer, idx) => (
             <QuestionCard key={answer._id} question={specialQuestions[completedMajor][idx]} answer={answer.answer} loading={props.isLoading} />
           ))}
+          {completedMajor === 'design' && (
+            <div>
+              <h2>Porfolio</h2>
+              {props.registrant.designPortfolio ?
+                <a href={getPdfPath(props.registrant.designPortfolio)} target="_blank">ดู Portfolio</a> :
+                'ไม่มี Portfolio'
+              }
+            </div>
+          )}
           {!completedMajor && <h2>ยังไม่ได้ตอบคำถามสาขา</h2>}
         </TabPane>
       </Tabs>

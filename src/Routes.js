@@ -98,7 +98,7 @@ const Routes = props => (
             <span>Registrant</span>
           </Link>
         </Menu.Item>}
-        {props.user.role === 'admin' && <Menu.Item key="4">
+        {false && props.user.role === 'admin' && <Menu.Item key="4">
           <Link to="/grading-status">
             <Icon type="user" />
             <span>Grading Status</span>

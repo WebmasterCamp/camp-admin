@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Icon } from 'antd';
-import { compose } from 'recompose';
-import { Tag } from 'antd';
+import { Table } from 'antd';
 
 const columns = [{
   title: 'ID',
@@ -30,6 +28,9 @@ const RegistrantTable = props => {
       columns={columns} 
       dataSource={props.data} 
       locale={{ emptyText: 'No Registrant Data to display.' }}
+      pagination={{
+        defaultPageSize: 20
+      }}
     />
   );
 }

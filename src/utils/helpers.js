@@ -7,4 +7,11 @@ export const getImagePath = (img) => {
   return img;
 };
 
+export const getPdfPath = path => {
+  if (path && path.indexOf('uploads') !== -1) {
+    return `${apiPath}/${path}`;
+  }
+  return path;
+}
+
 export const majorAsText = major => `Web ${major.charAt(0).toUpperCase()}${major.slice(1)}`;
