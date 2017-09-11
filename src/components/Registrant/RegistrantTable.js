@@ -23,7 +23,6 @@ const columns = [{
 },];
 
 const RegistrantTable = props => {
-  console.log(props);
   return (
     <Table {...props}
       size="middle"

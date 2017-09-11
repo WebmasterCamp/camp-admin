@@ -24,8 +24,9 @@ const AvatarImage = styled.div`
   background-image: url('${props => `${getImagePath(props.image)}`}');
   background-position: center center;
   background-size: contain;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
+  background-repeat: no-repeat;
 `;
 
 const RegistrantProfile = props => {
