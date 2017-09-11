@@ -14,6 +14,7 @@ const Question = styled.span`
   font-weight: bold;
   margin-right: 5px;
   margin-bottom: 4px;
+  white-space: pre-line;
 `;
 
 const Answer = styled.span`
@@ -161,6 +162,8 @@ const RegistrantProfile = props => {
           <Question>รู้จักค่ายได้ผ่านช่องทางไหน: </Question>
           <Answer>{props.knowCamp.join(', ')}</Answer>
         </p>
+        <p><Question>กิจกรรมและความสามารถพิเศษ</Question></p>
+        <p><Answer>{props.activities}</Answer></p>
       </Card>
     </div>
   );
