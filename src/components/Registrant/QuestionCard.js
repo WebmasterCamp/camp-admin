@@ -17,6 +17,9 @@ const CardTitle = styled.div`
 
 const CardContent = styled.div`
   padding: 15px;
+  > h3 {
+    white-space: pre-line;
+  }
 `;
 
 const QuestionCard = props => (
