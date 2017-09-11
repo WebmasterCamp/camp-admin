@@ -38,6 +38,10 @@ const MajorTitle = styled.h2`
   margin-bottom: 15px;
 `;
 
+const majorAnswerToComponent = (major, props) => (answer, idx) => (
+  <QuestionCard key={answer._id} question={specialQuestions[major][idx]} answer={answer.answer} loading={props.isLoading} />
+);
+
 const Registrant = props => {
   const { isLoading, completedMajor } = props;
   if (isLoading) return <Icon type="loading" />;
@@ -56,9 +60,7 @@ const Registrant = props => {
         </TabPane>
         <TabPane tab="คำถามสาขา" key="3">
           {completedMajor && <MajorTitle>{majorAsText(completedMajor)}</MajorTitle>}
-          {completedMajor && majorAnswers[completedMajor].map((answer, idx) => (
-            <QuestionCard key={answer._id} question={specialQuestions[completedMajor][idx]} answer={answer.answer} loading={props.isLoading} />
-          ))}
+          {completedMajor && majorAnswers[completedMajor].map(majorAnswerToComponent(completedMajor,  props))}
           {completedMajor === 'design' && (
             <div>
               <h2>Porfolio</h2>
@@ -68,7 +70,30 @@ const Registrant = props => {
               }
             </div>
           )}
-          {!completedMajor && <h2>ยังไม่ได้ตอบคำถามสาขา</h2>}
+          {!completedMajor && majorAnswers['design'].length !== 0 && (
+            <div>
+              <MajorTitle>{majorAsText('design')}</MajorTitle>
+              {majorAnswers['design'].map(majorAnswerToComponent('design', props))}
+            </div>
+          )}
+          {!completedMajor && majorAnswers['content'].length !== 0 && (
+            <div>
+              <MajorTitle>{majorAsText('content')}</MajorTitle>
+              {majorAnswers['content'].map(majorAnswerToComponent('content', props))}
+            </div>
+          )}
+          {!completedMajor && majorAnswers['programming'].length !== 0 && (
+            <div>
+              <MajorTitle>{majorAsText('programming')}</MajorTitle>
+              {majorAnswers['programming'].map(majorAnswerToComponent('programming', props))}
+            </div>
+          )}
+          {!completedMajor && majorAnswers['marketing'].length !== 0 && (
+            <div>
+              <MajorTitle>{majorAsText('marketing')}</MajorTitle>
+              {majorAnswers['marketing'].map(majorAnswerToComponent('marketing', props))}
+            </div>
+          )}
         </TabPane>
       </Tabs>
     </div>
