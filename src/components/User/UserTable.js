@@ -1,7 +1,6 @@
 import React from 'react';
-import { Table, Icon } from 'antd';
+import { Table } from 'antd';
 import { compose } from 'recompose';
-import { Tag } from 'antd';
 import { Progress } from 'antd';
 
 const columns = [{

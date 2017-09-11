@@ -1,11 +1,10 @@
 import React from 'react';
-import { Form, Icon, Input, Button, Layout, message } from 'antd';
+import { Form, Icon, Input, Button } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { compose, withState, withProps } from 'recompose';
 import styled from 'styled-components';
 
-import { redirectIfLoggedIn } from '../../utils/redirect';
 import { actions as authActions } from '../../ducks/auth';
 
 const FormItem = Form.Item;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { Tabs, Button } from 'antd';
+import { Tabs } from 'antd';
 import { compose, lifecycle, withProps, mapProps } from 'recompose';
 
 import UserTable from '../../components/User/UserTable';

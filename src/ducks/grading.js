@@ -1,5 +1,3 @@
-import { message } from 'antd';
-
 import actionCreator from '../utils/actionCreator';
 import api from '../utils/api';
 

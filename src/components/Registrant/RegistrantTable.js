@@ -29,7 +29,7 @@ const RegistrantTable = props => {
       dataSource={props.data} 
       locale={{ emptyText: 'No Registrant Data to display.' }}
       pagination={{
-        defaultPageSize: 20
+        defaultPageSize: 15
       }}
     />
   );

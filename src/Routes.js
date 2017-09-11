@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 import { actions as authActions } from './ducks/auth';
 import Overview from './pages/Overview';
-import Grading from './pages/grading/Grading';
+// import Grading from './pages/grading/Grading';
 import Registrants from './pages/Registrant/Registrants';
 import Registrant from './pages/Registrant/Registrant';
 import StageOneGrading from './pages/grading/StageOne/StageOneGrading';
@@ -18,7 +18,7 @@ import Affiliate from './pages/affiliate/Affiliate';
 import UserManagement from './pages/user-management/UserManagement';
 import Logout from './pages/auth/Logout';
 import Login from './pages/auth/Login';
-import Proxying from './pages/Proxying';
+// import Proxying from './pages/Proxying';
 
 const { Sider, Content } = Layout;
 

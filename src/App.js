@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Routes from './Routes';
-import Login from './pages/auth/Login';
 import Loading from './pages/Loading';
 import { actions as authActions } from './ducks/auth';
 

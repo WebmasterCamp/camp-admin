@@ -1,12 +1,10 @@
-import React from "react";
-import styled from "styled-components";
-import { Tabs, Button } from "antd";
-import { compose, lifecycle, withProps, mapProps } from "recompose";
-import { connect } from "react-redux";
+import React from 'react';
+import { Tabs } from 'antd';
+import { compose, lifecycle, withProps, mapProps } from 'recompose';
+import { connect } from 'react-redux';
 
-import RegistrantTable from "../../components/Registrant/RegistrantTable";
-import { redirectIfNotLoggedIn } from "../../utils/redirect";
-import { actions as registrantActions } from "../../ducks/registrant";
+import RegistrantTable from '../../components/Registrant/RegistrantTable';
+import { actions as registrantActions } from '../../ducks/registrant';
 
 const TabPane = Tabs.TabPane;
 

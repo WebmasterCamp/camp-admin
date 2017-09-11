@@ -1,4 +1,3 @@
-import React from 'react';
 import { compose, branch, renderNothing, lifecycle, renderComponent } from 'recompose';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
