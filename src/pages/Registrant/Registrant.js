@@ -1,16 +1,17 @@
 import React from "react";
 import { compose, withProps, lifecycle } from "recompose";
 import { connect } from "react-redux";
-import { Tabs, Button, Card, Row, Col, Tag } from "antd";
+import { Tabs, Icon } from "antd";
 import styled from "styled-components";
 
 import { actions as registrantActions } from "../../ducks/registrant";
 import RegistrantProfile from '../../components/Registrant/RegistrantProfile';
 import QuestionCard from '../../components/Registrant/QuestionCard';
 import questions from '../grading/questions.json';
+import { majorAsText } from '../../utils/helpers';
 
 const TabPane = Tabs.TabPane;
-const { generalQuestions } = questions;
+const { generalQuestions, specialQuestions } = questions;
 
 const enhance = compose(
   connect(
@@ -20,9 +21,12 @@ const enhance = compose(
     }),
     { ...registrantActions }
   ),
-  withProps(ownProps => ({
-    userId: ownProps.match.params.id
-  })),
+  withProps(
+    ownProps => ({
+      userId: ownProps.match.params.id,
+      completedMajor: ownProps.registrant.major
+    })
+  ),
   lifecycle({
     componentDidMount() {
       this.props.getRegistrant(this.props.userId);
@@ -30,45 +34,32 @@ const enhance = compose(
   })
 );
 
+const MajorTitle = styled.h2`
+  margin-bottom: 15px;
+`;
+
 const Registrant = props => {
-  console.log(props);
-  const { registrant } = props;
+  const { isLoading, completedMajor } = props;
+  if (isLoading) return <Icon type="loading" />;
+  const { generalQuestions: generalAnswers, specialQuestions: majorAnswers } = props.registrant.questions;
   return (
     <div>
       <Tabs>
         <TabPane tab="Profile" key="1">
-          <RegistrantProfile {...registrant} loading={props.isLoading} />
+          <RegistrantProfile {...props.registrant} loading={props.isLoading} />
         </TabPane>
         <TabPane tab="คำถามทั่วไป" key="2">
-          {registrant && registrant.questions && registrant.questions.generalQuestions.map((answer, idx) => (
+          {generalAnswers.map((answer, idx) => (
             <QuestionCard key={answer._id} question={generalQuestions[idx]} answer={answer.answer} loading={props.isLoading} />
           ))}
+          {generalAnswers.length === 0 && <h2>ยังไม่ได้ตอบคำถามส่วนกลาง</h2>}
         </TabPane>
         <TabPane tab="คำถามสาขา" key="3">
-          <Card
-            loading={props.isLoading}
-            noHovering
-            title="DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD "
-            style={{}}
-          >
-            <p>DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD DUDUD </p>
-          </Card>
-          <Card
-            loading={props.isLoading}
-            noHovering
-            title="Quation 2"
-            style={{ marginTop: 20 }}
-          >
-            <p>Answer: Card content</p>
-          </Card>
-          <Card
-            loading={props.isLoading}
-            noHovering
-            title="Quation 3"
-            style={{ marginTop: 20 }}
-          >
-            <p>Answer: Card content</p>
-          </Card>
+          {completedMajor && <MajorTitle>{majorAsText(completedMajor)}</MajorTitle>}
+          {completedMajor && majorAnswers[completedMajor].map((answer, idx) => (
+            <QuestionCard key={answer._id} question={specialQuestions[completedMajor][idx]} answer={answer.answer} loading={props.isLoading} />
+          ))}
+          {!completedMajor && <h2>ยังไม่ได้ตอบคำถามสาขา</h2>}
         </TabPane>
       </Tabs>
     </div>

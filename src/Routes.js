@@ -98,25 +98,25 @@ const Routes = props => (
             <span>Registrant</span>
           </Link>
         </Menu.Item>}
-        {props.user.role === 'admin' && <Menu.Item key="3">
+        {props.user.role === 'admin' && <Menu.Item key="4">
           <Link to="/grading-status">
             <Icon type="user" />
             <span>Grading Status</span>
           </Link>
         </Menu.Item>}
-        {props.user.role === 'admin' && <Menu.Item key="4">
+        {props.user.role === 'admin' && <Menu.Item key="5">
           <Link to="/affiliate">
             <Icon type="link" />
             <span>Affiliate</span>
           </Link>
         </Menu.Item>}
-        {props.user.role === 'admin' && <Menu.Item key="5">
+        {props.user.role === 'admin' && <Menu.Item key="6">
           <Link to="/user-management">
             <Icon type="user" />
             <span>Admin Management</span>
           </Link>
         </Menu.Item>}
-        {props.isLoggedIn && <Menu.Item key="6">
+        {props.isLoggedIn && <Menu.Item key="7">
           <Link to="/logout">
             <Icon type="poweroff" />
             <span>Logout</span>
