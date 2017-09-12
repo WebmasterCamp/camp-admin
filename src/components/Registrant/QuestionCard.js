@@ -18,8 +18,11 @@ const CardTitle = styled.div`
 const CardContent = styled.div`
   padding: 15px;
   > h3 {
-    white-space: pre;
-    ${props => props.monospace && 'font-family: monospace;'}
+    white-space: pre-line;
+    ${props => props.monospace && `
+      font-family: monospace;
+      white-space: pre;
+    `}
   }
 `;
 
