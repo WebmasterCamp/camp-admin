@@ -39,7 +39,7 @@ const MajorTitle = styled.h2`
 `;
 
 const majorAnswerToComponent = (major, props) => (answer, idx) => (
-  <QuestionCard key={answer._id} question={specialQuestions[major][idx]} answer={answer.answer} loading={props.isLoading} />
+  <QuestionCard key={answer._id} question={specialQuestions[major][idx]} answer={answer.answer} loading={props.isLoading} monospace={major === 'programming' && idx === 3} />
 );
 
 const Registrant = props => {

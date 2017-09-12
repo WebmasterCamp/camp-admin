@@ -19,6 +19,7 @@ const Question = styled.span`
 
 const Answer = styled.span`
   font-size: 16px;
+  white-space: pre;
 `;
 
 const AvatarImage = styled.div`
