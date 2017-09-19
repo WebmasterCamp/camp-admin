@@ -11,6 +11,7 @@ const initialState = {
   isLoadingList: true,
   lists: [],
   answers: [],
+  note: ''
 };
 
 export default (state = initialState, action) => {
@@ -19,12 +20,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoadingList: false,
-        lists: action.data
+        lists: action.data,
+        note: ''
       };
     case GET_STAGE_ONE_ANSWERS.RESOLVED:
       return {
         ...state,
-        answers: action.data
+        answers: action.data.answers,
+        note: action.data.note ? action.data.note.note : ''
       }
     default: return state;
   }

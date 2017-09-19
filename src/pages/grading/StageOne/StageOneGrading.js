@@ -14,7 +14,8 @@ const { generalQuestions } = questions;
 const enhance = compose(
   connect(
     state => ({
-      answers: state.grading.answers
+      answers: state.grading.answers,
+      graderNote: state.grading.note
     }),
     { ...gradingActions, push }
   ),
@@ -34,8 +35,12 @@ const enhance = compose(
   withState('note', 'setNote', ''),
   lifecycle({
     componentDidMount() {
-      console.log('did mount');
       this.props.getStageOneItem(this.props.userId);
+    },
+    componentWillReceiveProps(nextProps) {
+      if (!this.props.graderNote && nextProps.graderNote) {
+        this.props.setNote(nextProps.graderNote);
+      }
     }
   })
 );
@@ -47,16 +52,23 @@ const ActionSpan = styled.div`
   }
 `;
 
+const Label = styled.p`
+  font-weight: 600;
+  padding-top: 10px;
+`;
+
 const NoteInput = styled(Input)`
-  margin-top: 15px;
+  margin-top: 10px;
 `;
 
 const StageOneGrading = props => {
   const { answers, note, setNote } = props;
+  console.log(props);
   return (
     <div>
       <h1>ID: {props.match.params.id}</h1>
       {answers.map((answer, idx) => <AnswerItem answer={answer.answer} question={generalQuestions[idx]} />)}
+      <Label>Note</Label>
       <NoteInput onChange={e => setNote(e.target.value)} value={note} />
       <ActionSpan>
         <Button type="primary" icon="check-circle" onClick={() => props.onPass(true, note)}>Yes</Button>
