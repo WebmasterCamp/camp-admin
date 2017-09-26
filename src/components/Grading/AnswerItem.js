@@ -7,11 +7,11 @@ const Container = styled.div`
 `;
 
 const Question = styled.h3`
-  font-weight: 600;
+  font-weight: 400;
 `;
 
 const Answer = styled.h2`
-
+  white-space: pre-line;
 `;
 
 const AnswerItem = props => (
