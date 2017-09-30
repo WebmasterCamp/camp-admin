@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs } from 'antd';
 import { compose, lifecycle, withProps, mapProps } from 'recompose';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import RegistrantTable from '../../components/Registrant/RegistrantTable';
 import { actions as registrantActions } from '../../ducks/registrant';
@@ -14,6 +15,12 @@ const mapUserToTableData = user => ({
   fullname: user.title + "" + user.firstName + " " + user.lastName,
   email: user.email
 });
+
+const sortingFn = (a,b) => {
+  if (moment(a.completed_at).isBefore(moment(b.completed_at))) return -1;
+  else if (moment(a.completed_at).isSame(moment(b.completed_at))) return 0;
+  return 1;
+};
 
 const enhance = compose(
   connect(
@@ -36,16 +43,16 @@ const enhance = compose(
   withProps(ownProps => ({
     programming: ownProps.completedRegistrants.filter(
       user => user.major === "programming"
-    ),
+    ).sort(sortingFn),
     design: ownProps.completedRegistrants.filter(
       user => user.major === "design"
-    ),
+    ).sort(sortingFn),
     marketing: ownProps.completedRegistrants.filter(
       user => user.major === "marketing"
-    ),
+    ).sort(sortingFn),
     content: ownProps.completedRegistrants.filter(
       user => user.major === "content"
-    ),
+    ).sort(sortingFn),
     notConfirm: ownProps.pendingRegistrants.filter(
       user => user.completed.filter(done => !done).length === 0
     ),
