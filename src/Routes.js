@@ -12,6 +12,7 @@ import Registrants from './pages/Registrant/Registrants';
 import Registrant from './pages/Registrant/Registrant';
 import StageOneGrading from './pages/grading/StageOne/StageOneGrading';
 import StageOneList from './pages/grading/StageOne/StageOneList';
+import StageTwoList from './pages/grading/StageTwo/StageTwoList';
 import Users from './pages/users/Users';
 import User from './pages/users/User';
 import Affiliate from './pages/affiliate/Affiliate';
@@ -71,6 +72,18 @@ const StageOneRoute = ({ component: Component, user, ...rest }) => (
   )}/>
 );
 
+const StageTwoRoute = ({ component: Component, user, ...rest }) => (
+  <Route {...rest} render={props => (
+    user.role === 'stage-2' ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+      }}/>
+    )
+  )}/>
+);
+
 const Routes = props => (
   <StyledLayout>
     <Sider
@@ -86,7 +99,7 @@ const Routes = props => (
             <span>Overview</span>
           </Link> 
         </Menu.Item>}
-        {['designer', 'marketing', 'programming', 'content', 'stage-1'].indexOf(props.user.role) !== -1 && <Menu.Item key="2">
+        {['designer', 'marketing', 'programming', 'content', 'stage-1', 'stage-2'].indexOf(props.user.role) !== -1 && <Menu.Item key="2">
           <Link to="/grading">
             <Icon type="edit" />
             <span>Grading</span>
@@ -135,8 +148,8 @@ const Routes = props => (
         <AdminRoute user={props.user} path="/registrant" exact component={Registrants} />
         <AdminRoute user={props.user} path="/registrant/:id" exact component={Registrant} />
         <AdminRoute user={props.user} path="/user-management" exact component={UserManagement} />
-        <StageOneRoute user={props.user} path="/grading" exact component={StageOneList} />
-        <StageOneRoute  user={props.user} path="/grading/:id" exact component={StageOneGrading} />
+        {props.user.role === 'stage-1' && <StageOneRoute user={props.user} path="/grading" exact component={StageOneList} />}
+        {props.user.role === 'stage-2' && <StageTwoRoute user={props.user} path="/grading" exact component={StageTwoList} />}
         {/* <Route path="/" exact component={Proxying} /> */}
         {/* <Redirect from='*' to='/login' /> */}
       </Content>
