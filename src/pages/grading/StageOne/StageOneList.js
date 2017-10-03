@@ -62,7 +62,7 @@ const columns = props => [{
   title: 'Note',
   dataIndex: 'note',
   key: 'note',
-  render: text => <p>{text}</p>
+  render: text => <p>{text.substring(0, 10)}{text.substring(0, 10).length === 0 ? '' : '...'}</p>
 }];
 
 const GradingContainer = styled.div`

@@ -68,7 +68,7 @@ const StageOneGrading = props => {
   if (props.isLoadingItem) return <h1>Loading...</h1>
   return (
     <div>
-      <h1>ID: {props.userId}</h1>
+      <p>ID: {props.userId}</p>
       {answers.map((answer, idx) => <AnswerItem answer={answer.answer} question={generalQuestions[idx]} />)}
       <Label>Note</Label>
       <NoteInput rows={3} onChange={e => setNote(e.target.value)} value={note} />

@@ -6,11 +6,12 @@ const Container = styled.div`
   border-bottom: 1px solid #ddd;
 `;
 
-const Question = styled.h3`
-  font-weight: 400;
+const Question = styled.h2`
+  font-weight: 600;
+  margin-bottom: 10px;
 `;
 
-const Answer = styled.h2`
+const Answer = styled.h3`
   white-space: pre-line;
 `;
 
