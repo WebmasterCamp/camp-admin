@@ -2,32 +2,37 @@ import React from 'react';
 import { compose, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Card, Col, Row } from 'antd';
+import { Card, Col, Row, Progress, Icon } from 'antd';
 
 import { redirectIfNotLoggedIn } from '../utils/redirect';
 import { actions as overviewActions } from '../ducks/overview';
+import { actions as gradingActions } from '../ducks/grading';
 
 const enhance = compose(
   redirectIfNotLoggedIn,
   connect(
     state => ({
-      stat: state.overview.stat
+      stat: state.overview.stat,
+      gradingStat: state.grading.stat,
+      isLoading: state.grading.isLoadingStat && state.overview.isLoading
     }),
-    { ...overviewActions }
+    { ...overviewActions, ...gradingActions }
   ),
   lifecycle({
     componentDidMount() {
       this.props.getRegisterStat();
+      this.props.loadGradingStatus();
     }
   }) 
 );
 
-const OverviewTitle = styled.h1`
-  margin-bottom: 10px;
+const Label = styled.p`
+  font-weight: bold;
+  padding-top: 10px;
 `;
 
 const SectionContainer = styled.div`
-
+  margin-bottom: 20px;
 `;
 
 const SectionTitle = styled.h2`
@@ -46,53 +51,104 @@ const MajorCount = styled.h3`
   font-size: 40px;
 `;
 
-const Overview = props => (
-  <div>
-    <OverviewTitle>Overview</OverviewTitle>
-    <SectionContainer>
-      <SectionTitle>Register Statatistics</SectionTitle>
-      <Row gutter={16} style={{ marginBottom: 20 }}>
-        <Col span={6}>
-          <MajorCard>
-            <MajorTitle>Content</MajorTitle>
-            <MajorCount>{props.stat.content}</MajorCount>
-          </MajorCard>
-        </Col>
-        <Col span={6}>
-          <MajorCard>
-            <MajorTitle>Design</MajorTitle>
-            <MajorCount>{props.stat.design}</MajorCount>
-          </MajorCard>
-        </Col>
-        <Col span={6}>
-          <MajorCard>
-            <MajorTitle>Marketing</MajorTitle>
-            <MajorCount>{props.stat.marketing}</MajorCount>
-          </MajorCard>
-        </Col>
-        <Col span={6}>
-          <MajorCard>
-            <MajorTitle>Programming</MajorTitle>
-            <MajorCount>{props.stat.programming}</MajorCount>
-          </MajorCard>
-        </Col>
-      </Row>
-      <Row gutter={16}>
-        <Col span={6}>
-          <MajorCard>
-            <MajorTitle>Pending</MajorTitle>
-            <MajorCount>{props.stat.pending}</MajorCount>
-          </MajorCard>
-        </Col>
-        <Col span={6}>
-          <MajorCard>
-            <MajorTitle>Not Confirm</MajorTitle>
-            <MajorCount>{props.stat.notConfirm}</MajorCount>
-          </MajorCard>
-        </Col>
-      </Row>
-    </SectionContainer>
-  </div>
-);
+const GradingStatusCol = styled(Col)`
+  text-align: center;
+`;
+
+const GradingStatusRow = styled(Row)`
+  margin-bottom: 30px;
+`;
+
+const Overview = props => {
+  if (props.isLoading) return <Icon type="loading" />
+  const { gradingStat } = props;
+  const { stageOne, stageTwo } = gradingStat;
+  return (
+    <div>
+      <SectionContainer>
+        <SectionTitle>Register Statatistics</SectionTitle>
+        <Row gutter={16} style={{ marginBottom: 20 }}>
+          <Col span={6}>
+            <MajorCard>
+              <MajorTitle>Content</MajorTitle>
+              <MajorCount>{props.stat.content}</MajorCount>
+            </MajorCard>
+          </Col>
+          <Col span={6}>
+            <MajorCard>
+              <MajorTitle>Design</MajorTitle>
+              <MajorCount>{props.stat.design}</MajorCount>
+            </MajorCard>
+          </Col>
+          <Col span={6}>
+            <MajorCard>
+              <MajorTitle>Marketing</MajorTitle>
+              <MajorCount>{props.stat.marketing}</MajorCount>
+            </MajorCard>
+          </Col>
+          <Col span={6}>
+            <MajorCard>
+              <MajorTitle>Programming</MajorTitle>
+              <MajorCount>{props.stat.programming}</MajorCount>
+            </MajorCard>
+          </Col>
+        </Row>
+        <Row gutter={16}>
+          <Col span={6}>
+            <MajorCard>
+              <MajorTitle>Pending</MajorTitle>
+              <MajorCount>{props.stat.pending}</MajorCount>
+            </MajorCard>
+          </Col>
+          <Col span={6}>
+            <MajorCard>
+              <MajorTitle>Not Confirm</MajorTitle>
+              <MajorCount>{props.stat.notConfirm}</MajorCount>
+            </MajorCard>
+          </Col>
+        </Row>
+      </SectionContainer>
+      <SectionContainer>
+        <SectionTitle>Grading Status</SectionTitle>
+        <GradingStatusRow gutter={16}>
+          <GradingStatusCol span={12}>
+            <Progress
+              type="circle"
+              percent={stageOne.graded * 100/stageOne.all}
+              format={percent => `${stageOne.graded}/${stageOne.all}`}
+            />
+            <Label>Stage One</Label>
+          </GradingStatusCol>
+          <GradingStatusCol span={12}>
+            <Progress
+              type="circle"
+              percent={stageTwo.graded * 100/stageTwo.all}
+              format={percent => `${stageTwo.graded}/${stageTwo.all}`}
+            />
+            <Label>Stage Two</Label>
+          </GradingStatusCol>
+        </GradingStatusRow>
+        <GradingStatusRow gutter={16}>
+          <GradingStatusCol span={6}>
+            <Progress type="circle" percent={0} format={percent => `---`} />
+            <Label>Programming</Label>
+          </GradingStatusCol>
+          <GradingStatusCol span={6}>
+            <Progress type="circle" percent={0} format={percent => `---`} />
+            <Label>Designer</Label>
+          </GradingStatusCol>
+          <GradingStatusCol span={6}>
+            <Progress type="circle" percent={0} format={percent => `---`} />
+            <Label>Marketing</Label>
+          </GradingStatusCol>
+          <GradingStatusCol span={6}>
+            <Progress type="circle" percent={0} format={percent => `---`} />
+            <Label>Content</Label>
+          </GradingStatusCol>
+        </GradingStatusRow>
+      </SectionContainer>
+    </div>
+  );
+}
 
 export default enhance(Overview);

@@ -10,7 +10,7 @@ import Overview from './pages/Overview';
 // import Grading from './pages/grading/Grading';
 import Registrants from './pages/Registrant/Registrants';
 import Registrant from './pages/Registrant/Registrant';
-import StageOneGrading from './pages/grading/StageOne/StageOneGrading';
+// import StageOneGrading from './pages/grading/StageOne/StageOneGrading';
 import StageOneList from './pages/grading/StageOne/StageOneList';
 import StageTwoList from './pages/grading/StageTwo/StageTwoList';
 import Users from './pages/users/Users';
@@ -109,12 +109,6 @@ const Routes = props => (
           <Link to="/registrant">
             <Icon type="user" />
             <span>Registrant</span>
-          </Link>
-        </Menu.Item>}
-        {false && props.user.role === 'admin' && <Menu.Item key="4">
-          <Link to="/grading-status">
-            <Icon type="user" />
-            <span>Grading Status</span>
           </Link>
         </Menu.Item>}
         {props.user.role === 'admin' && <Menu.Item key="5">
