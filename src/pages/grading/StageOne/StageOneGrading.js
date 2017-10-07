@@ -63,13 +63,14 @@ const NoteInput = styled(Input.TextArea)`
 `;
 
 const StageOneGrading = props => {
-  const { answers, note, setNote } = props;
+  const { answers, note, setNote, activities } = props;
   console.log(props);
   if (props.isLoadingItem) return <h1>Loading...</h1>
   return (
     <div>
       <p>ID: {props.userId}</p>
       {answers.map((answer, idx) => <AnswerItem answer={answer.answer} question={generalQuestions[idx]} />)}
+      <AnswerItem answer={activities} question="กิจกรรมที่เคยทำ" />
       <Label>Note</Label>
       <NoteInput rows={3} onChange={e => setNote(e.target.value)} value={note} />
       <ActionSpan>

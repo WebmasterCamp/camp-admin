@@ -45,6 +45,7 @@ export default (state = initialState, action) => {
         ...state,
         answers: action.data.answers,
         note: action.data.note ? action.data.note.note : '',
+        activities: action.data.activities,
         isLoadingItem: false
       };
     case GET_STAGE_TWO_LIST.RESOLVED:

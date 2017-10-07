@@ -15,7 +15,8 @@ const enhance = compose(
       isLoadingList: state.grading.isLoadingList,
       lists: state.grading.lists,
       answers: state.grading.answers,
-      graderNote: state.grading.note
+      graderNote: state.grading.note,
+      activities: state.grading.activities
     }),
     { ...gradingActions }
   ),
@@ -93,6 +94,7 @@ const StageOneList = props => (
             <StageOneGrading
               userId={props.currentId}
               answers={props.answers}
+              activities={props.activities}
               doneGrading={() => props.getStageOneList().then(() => props.setCurrentId(''))}
             />
           </GradingContainer>
