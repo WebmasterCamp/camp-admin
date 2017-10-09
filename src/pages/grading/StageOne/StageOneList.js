@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { compose, lifecycle, withProps, withState } from 'recompose';
 import _ from 'lodash'
 import { Table, Tag, Col, Row } from 'antd';

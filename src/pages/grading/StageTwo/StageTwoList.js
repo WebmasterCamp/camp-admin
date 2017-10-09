@@ -1,14 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, lifecycle, withProps, withState } from 'recompose';
-import _ from 'lodash'
 import { Table, Tag, Col, Row, Collapse, Input } from 'antd';
 import styled from 'styled-components';
 
 // import StageOneGrading from './StageOneGrading';
 import { actions as gradingActions } from '../../../ducks/grading';
 import { RedButton, GreenButton } from '../../../components/Core/Buttons';
+import AnswerItem from '../../../components/Grading/AnswerItem';
+import questions from '../questions.json';
 
+const { generalQuestions } = questions;
 const Panel = Collapse.Panel;
 
 const enhance = compose(
@@ -70,7 +72,6 @@ const columns = props => [{
   key: 'status',
   width: '100px',  
   render: (text, record) => {
-    console.log(record);
     if (!record.isJudgeStageTwo) {
       return <p>-</p>
     }
@@ -116,9 +117,13 @@ const NoteInput = styled(Input.TextArea)`
   margin-top: 10px;
 `;
 
-const StageOneList = props => {
+const NoteLabel = styled.p`
+  font-weight: bold;
+  padding: 10px 0 5px;
+`;
+
+const StageTwoList = props => {
   const { selectedItem, note } = props;
-  console.log(note);
   return (
     <div>
       <h1>Grading</h1>
@@ -137,7 +142,7 @@ const StageOneList = props => {
           {Object.keys(selectedItem).length !== 0 && (
             <GradingContainer>
               <Label>ID: {selectedItem._id}</Label>
-              <Collapse defaultActiveKey={['profile', 'contact']}>
+              <Collapse defaultActiveKey={['profile', 'contact', 'general']}>
                 <Panel header={<p><b>ข้อมูลส่วนตัว</b></p>} key="profile">
                   <InfoItem><b>ชื่อ-นามสกุล:</b> {selectedItem.firstName} {selectedItem.lastName}</InfoItem>
                   <InfoItem><b>Name:</b> {selectedItem.firstNameEN} {selectedItem.lastNameEN}</InfoItem>
@@ -157,7 +162,11 @@ const StageOneList = props => {
                   <InfoItem><b>เบอร์ติดต่อฉุนเฉิน:</b> {selectedItem.emergencyPhone}</InfoItem>
                   <InfoItem><b>เกี่ยวข้องเป็น:</b> {selectedItem.emergencyPhoneRelated}</InfoItem>
                 </Panel>
+                <Panel header={<p><b>คำถามส่วนกลาง</b></p>} key="general">
+                  {selectedItem.questions.generalQuestions.map((answer, idx) => <AnswerItem key={`answer-${idx}`} answer={answer.answer} question={generalQuestions[idx]} />)}
+                </Panel>
               </Collapse>
+              <NoteLabel>Note</NoteLabel>
               <NoteInput rows={3} value={note} onChange={e => props.setNote(e.target.value)} />
               <ActionSpan>
                 <GreenButton icon="check-circle" onClick={() => props.onPass(selectedItem._id, true, note)}>Yes</GreenButton>
@@ -171,4 +180,4 @@ const StageOneList = props => {
   );
 }
 
-export default enhance(StageOneList);
+export default enhance(StageTwoList);

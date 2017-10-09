@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, withProps, withState, lifecycle } from 'recompose';
-import { Table, Tag, Col, Row, Collapse, Input } from 'antd';
+import { Table, Tag, Col, Row } from 'antd';
 import _ from 'lodash';
 import styled from 'styled-components';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, lifecycle, withProps, withState } from 'recompose';
-import { Button, Input } from 'antd';
+import { Input } from 'antd';
 import styled from 'styled-components';
 
 import { actions as gradingActions } from '../../../ducks/grading';
