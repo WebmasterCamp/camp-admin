@@ -51,7 +51,6 @@ const enhance = compose(
       this.props.getStageTwoList();
     },
     componentWillReceiveProps(nextProps) {
-      console.log(nextProps.selectedItem.noteStageTwo, this.props.selectedItem.noteStageTwo);
       if (nextProps.selectedItem.noteStageTwo !== this.props.selectedItem.noteStageTwo) {
         nextProps.setNote(nextProps.selectedItem.noteStageTwo);
       }

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { getPdfPath } from '../../utils/helpers';
+
 const Container = styled.div`
   padding: 15px 0;
   border-bottom: 1px solid #ddd;
@@ -18,7 +20,9 @@ const Answer = styled.h3`
 const AnswerItem = props => (
   <Container>
     <Question>{props.question}</Question>
-    <Answer>{props.answer}</Answer>
+    {props.isLink && props.answer && <a href={getPdfPath(props.answer)} target="_blank">เปิดไฟล์ Portfolio</a>}
+    {props.isLink && !props.answer && <p>ไม่มี Portfolio</p>}
+    {!props.isLink && <Answer>{props.answer}</Answer>}
   </Container>
 );
 

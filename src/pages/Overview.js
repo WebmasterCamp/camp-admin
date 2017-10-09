@@ -59,10 +59,14 @@ const GradingStatusRow = styled(Row)`
   margin-bottom: 30px;
 `;
 
+const getPercentage = stat => stat.graded * 100/stat.all;
+const getText = stat => `${stat.graded}/${stat.all}`
+
 const Overview = props => {
   if (props.isLoading) return <Icon type="loading" />
   const { gradingStat } = props;
-  const { stageOne, stageTwo } = gradingStat;
+  const { stageOne, stageTwo, programming, design, marketing, content } = gradingStat;
+  console.log(gradingStat);
   return (
     <div>
       <SectionContainer>
@@ -114,35 +118,51 @@ const Overview = props => {
           <GradingStatusCol span={12}>
             <Progress
               type="circle"
-              percent={stageOne.graded * 100/stageOne.all}
-              format={percent => `${stageOne.graded}/${stageOne.all}`}
+              percent={getPercentage(stageOne)}
+              format={() => getText(stageOne)}
             />
             <Label>Stage One</Label>
           </GradingStatusCol>
           <GradingStatusCol span={12}>
             <Progress
               type="circle"
-              percent={stageTwo.graded * 100/stageTwo.all}
-              format={percent => `${stageTwo.graded}/${stageTwo.all}`}
+              percent={getPercentage(stageTwo)}
+              format={() => getText(stageTwo)}
             />
             <Label>Stage Two</Label>
           </GradingStatusCol>
         </GradingStatusRow>
         <GradingStatusRow gutter={16}>
           <GradingStatusCol span={6}>
-            <Progress type="circle" percent={0} format={percent => `---`} />
+            <Progress
+              type="circle"
+              percent={getPercentage(programming)}
+              format={() => getText(programming)}
+            />
             <Label>Programming</Label>
           </GradingStatusCol>
           <GradingStatusCol span={6}>
-            <Progress type="circle" percent={0} format={percent => `---`} />
-            <Label>Designer</Label>
+            <Progress
+              type="circle"
+              percent={getPercentage(design)}
+              format={() => getText(design)}
+            />
+            <Label>Design</Label>
           </GradingStatusCol>
           <GradingStatusCol span={6}>
-            <Progress type="circle" percent={0} format={percent => `---`} />
+            <Progress
+              type="circle"
+              percent={getPercentage(marketing)}
+              format={() => getText(marketing)}
+            />
             <Label>Marketing</Label>
           </GradingStatusCol>
           <GradingStatusCol span={6}>
-            <Progress type="circle" percent={0} format={percent => `---`} />
+            <Progress
+              type="circle"
+              percent={getPercentage(content)}
+              format={() => getText(content)}
+            />
             <Label>Content</Label>
           </GradingStatusCol>
         </GradingStatusRow>

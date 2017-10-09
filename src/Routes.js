@@ -13,6 +13,7 @@ import Registrant from './pages/Registrant/Registrant';
 // import StageOneGrading from './pages/grading/StageOne/StageOneGrading';
 import StageOneList from './pages/grading/StageOne/StageOneList';
 import StageTwoList from './pages/grading/StageTwo/StageTwoList';
+import MajorList from './pages/grading/Major/MajorList';
 import Users from './pages/users/Users';
 import User from './pages/users/User';
 import Affiliate from './pages/affiliate/Affiliate';
@@ -84,6 +85,18 @@ const StageTwoRoute = ({ component: Component, user, ...rest }) => (
   )}/>
 );
 
+const MajorRoute = ({ component: Component, user, ...rest }) => (
+  <Route {...rest} render={props => (
+    (user.role === 'programming' || user.role === 'design' || user.role === 'marketing' || user.role === 'content') ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+      }}/>
+    )
+  )}/>
+);
+
 const Routes = props => (
   <StyledLayout>
     <Sider
@@ -144,6 +157,9 @@ const Routes = props => (
         <AdminRoute user={props.user} path="/user-management" exact component={UserManagement} />
         {props.user.role === 'stage-1' && <StageOneRoute user={props.user} path="/grading" exact component={StageOneList} />}
         {props.user.role === 'stage-2' && <StageTwoRoute user={props.user} path="/grading" exact component={StageTwoList} />}
+        {(props.user.role === 'marketing' || props.user.role === 'content' || props.user.role === 'programming' || props.user.role === 'design') && (
+          <MajorRoute user={props.user} path="/grading" exact component={MajorList} />
+        )}
         {/* <Route path="/" exact component={Proxying} /> */}
         {/* <Redirect from='*' to='/login' /> */}
       </Content>

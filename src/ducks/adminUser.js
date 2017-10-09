@@ -35,16 +35,14 @@ export const actions = {
     type: GET_ADMIN_USER,
     promise: api.get('/admin')
   }),
-  createAdminUser: (username, password, role) => dispatch => ({
+  createAdminUser: (username, password, role) => ({
     type: CREATE_ADMIN_USER,
-    promise: api.post('/admin', { username, password, role })
-      .then(dispatch(actions.getAdminUser())),
+    promise: api.post('/admin', { username, password, role }),
     success: 'New Admin user has been create'
   }),
-  deleteAdminUser: (id) => dispatch => ({
+  deleteAdminUser: (id) => ({
     type: DELETE_ADMIN_USER,
-    promise: api.delete(`/admin/${id}`)
-      .then(dispatch(actions.getAdminUser())),
+    promise: api.delete(`/admin/${id}`),
     success: 'Admin user has been deleted.'
   })
 };
