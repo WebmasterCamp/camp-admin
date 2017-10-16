@@ -32,7 +32,6 @@ const enhance = compose(
   ),
   mapProps(ownProps => ({
     getRegistrantList: ownProps.getRegistrantList,
-    push: ownProps.push,
     completedRegistrants: ownProps.registrants.filter(
       user => user.status === "completed"
     ),
@@ -75,29 +74,31 @@ const enhance = compose(
   })
 );
 
-const Registrants = props => (
-  <div>
-    <Tabs>
-      <TabPane tab={`Not Confirm (${props.notConfirm.length})`} key="notConfirm">
-        <RegistrantTable loading={props.isLoading} data={props.notConfirm} />
-      </TabPane>
-      <TabPane tab={`Pending (${props.pending.length})`} key="pending">
-        <RegistrantTable loading={props.isLoading} data={props.pending} />
-      </TabPane>
-      <TabPane tab={`Content (${props.content.length})`} key="content">
-        <RegistrantTable loading={props.isLoading} data={props.content} />
-      </TabPane>
-      <TabPane tab={`Design (${props.design.length})`} key="design">
-        <RegistrantTable loading={props.isLoading} data={props.design} />
-      </TabPane>
-      <TabPane tab={`Marketing (${props.marketing.length})`} key="marketing">
-        <RegistrantTable loading={props.isLoading} data={props.marketing} />
-      </TabPane>
-      <TabPane tab={`Programming (${props.programming.length})`} key="programming">
-        <RegistrantTable loading={props.isLoading} data={props.programming} />
-      </TabPane>
-    </Tabs>
-  </div>
-);
+const Registrants = props => {
+  return (
+    <div>
+      <Tabs>
+        <TabPane tab={`Not Confirm (${props.notConfirm.length})`} key="notConfirm">
+          <RegistrantTable loading={props.isLoading} data={props.notConfirm} />
+        </TabPane>
+        <TabPane tab={`Pending (${props.pending.length})`} key="pending">
+          <RegistrantTable loading={props.isLoading} data={props.pending} />
+        </TabPane>
+        <TabPane tab={`Content (${props.content.length})`} key="content">
+          <RegistrantTable loading={props.isLoading} data={props.content} />
+        </TabPane>
+        <TabPane tab={`Design (${props.design.length})`} key="design">
+          <RegistrantTable loading={props.isLoading} data={props.design} />
+        </TabPane>
+        <TabPane tab={`Marketing (${props.marketing.length})`} key="marketing">
+          <RegistrantTable loading={props.isLoading} data={props.marketing} />
+        </TabPane>
+        <TabPane tab={`Programming (${props.programming.length})`} key="programming">
+          <RegistrantTable loading={props.isLoading} data={props.programming} />
+        </TabPane>
+      </Tabs>
+    </div>
+  );
+}
 
 export default enhance(Registrants);

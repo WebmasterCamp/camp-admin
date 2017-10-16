@@ -5,17 +5,20 @@ const registrantAction = actionCreator('registrant');
 
 const GET_REGISTRANTS = registrantAction('GET_REGISTRANTS', true);
 const GET_REGISTRANT = registrantAction('GET_REGISTRANT', true);
+const GET_INTERVIEW_CANDIDATE = registrantAction('GET_INTERVIEW_CANDIDATE', true);
 
 const initialState = {
   isLoading: true,
   isRegistrantLoading: true,
   registrant: {},
   registrants: [],
+  isLoadingInterviewCandidate: true,
+  interviewCandidate: {},
 };
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case GET_REGISTRANTS.PENDING:
+    case GET_REGISTRANTS.PENDING: 
       return {
         ...state,
         registrants: [],
@@ -39,6 +42,18 @@ export default (state = initialState, action) => {
         registrant: action.data,
         isRegistrantLoading: false,
       }
+    case GET_INTERVIEW_CANDIDATE.PENDING:
+      return {
+        ...state,
+        isLoadingInterviewCandidate: true,
+        interviewCandidate: {}
+      };
+    case GET_INTERVIEW_CANDIDATE.RESOLVED:
+      return {
+        ...state,
+        isLoadingInterviewCandidate: false,
+        interviewCandidate: action.data
+      };
     default: return state;
   }
 }
@@ -52,4 +67,8 @@ export const actions = {
     type: GET_REGISTRANT,
     promise: api.get(`/users/${id}`)
   }),
+  getCandidateList: () => ({
+    type: GET_INTERVIEW_CANDIDATE,
+    promise: api.get('/users/interview')
+  })
 };

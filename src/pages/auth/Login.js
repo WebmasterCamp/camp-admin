@@ -63,7 +63,7 @@ const Login = props => {
   console.log(props);
 return (
   <Container>
-    <Title>YWC15 Admin System</Title>
+    <Title>YWC15 Admin & Grading System</Title>
     <FormContainer onSubmit={props.handleLogin}>
       <FormItem>
         <Input

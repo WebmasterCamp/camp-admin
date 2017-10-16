@@ -18,12 +18,13 @@ import Users from './pages/users/Users';
 import User from './pages/users/User';
 import Affiliate from './pages/affiliate/Affiliate';
 import UserManagement from './pages/user-management/UserManagement';
+import InteviewCandidate from './pages/Registrant/InteviewCandidate';
 import Logout from './pages/auth/Logout';
 import Login from './pages/auth/Login';
 // import Proxying from './pages/Proxying';
 
 const { Sider, Content } = Layout;
-
+const { SubMenu } = Menu;
 const StyledLayout = styled(Layout)`
   height: 100%;
 `;
@@ -106,40 +107,56 @@ const Routes = props => (
     >
       <BrandingImg />
       <Menu theme="dark" mode="inline">
-        {props.user.role === 'admin' && <Menu.Item key="1">
+        {!props.isLoggedIn && (
+          <Menu.Item key="login">
+            <Link to="/login">
+              <Icon type="login" />
+              <span>Log In</span>
+            </Link> 
+          </Menu.Item>
+        )}
+        {props.user.role === 'admin' && <Menu.Item key="overview">
           <Link to="/overview">
             <Icon type="area-chart" />
             <span>Overview</span>
           </Link> 
         </Menu.Item>}
-        {['designer', 'marketing', 'programming', 'content', 'stage-1', 'stage-2'].indexOf(props.user.role) !== -1 && <Menu.Item key="2">
+        {['design', 'marketing', 'programming', 'content', 'stage-1', 'stage-2'].indexOf(props.user.role) !== -1 && <Menu.Item key="grading">
           <Link to="/grading">
             <Icon type="edit" />
             <span>Grading</span>
           </Link> 
         </Menu.Item>}
-        {props.user.role === 'admin' && <Menu.Item key="3">
-          <Link to="/registrant">
-            <Icon type="user" />
-            <span>Registrant</span>
-          </Link>
-        </Menu.Item>}
-        {props.user.role === 'admin' && <Menu.Item key="5">
+        {props.user.role === 'admin' && (
+          <SubMenu key="registrant-menu" title={<p><Icon type="user" /> Registrant</p>}>
+            <Menu.Item key="registrant">
+              <Link to="/registrant">
+                <span>All Registrant</span>
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="interview-candidate">
+              <Link to="/interview-candidate">
+                <span>Interview Candidate</span>
+              </Link>
+            </Menu.Item>
+          </SubMenu>
+        )}
+        {props.user.role === 'admin' && <Menu.Item key="affiliate">
           <Link to="/affiliate">
             <Icon type="link" />
             <span>Affiliate</span>
           </Link>
         </Menu.Item>}
-        {props.user.role === 'admin' && <Menu.Item key="6">
+        {props.user.role === 'admin' && <Menu.Item key="admin-management">
           <Link to="/user-management">
             <Icon type="user" />
             <span>Admin Management</span>
           </Link>
         </Menu.Item>}
-        {props.isLoggedIn && <Menu.Item key="7">
+        {props.isLoggedIn && <Menu.Item key="logout">
           <Link to="/logout">
             <Icon type="poweroff" />
-            <span>Logout</span>
+            <span>Log Out</span>
           </Link>
         </Menu.Item>}
       </Menu>
@@ -155,6 +172,7 @@ const Routes = props => (
         <AdminRoute user={props.user} path="/registrant" exact component={Registrants} />
         <AdminRoute user={props.user} path="/registrant/:id" exact component={Registrant} />
         <AdminRoute user={props.user} path="/user-management" exact component={UserManagement} />
+        <AdminRoute user={props.user} path="/interview-candidate" exact component={InteviewCandidate} />
         {props.user.role === 'stage-1' && <StageOneRoute user={props.user} path="/grading" exact component={StageOneList} />}
         {props.user.role === 'stage-2' && <StageTwoRoute user={props.user} path="/grading" exact component={StageTwoList} />}
         {(props.user.role === 'marketing' || props.user.role === 'content' || props.user.role === 'programming' || props.user.role === 'design') && (
