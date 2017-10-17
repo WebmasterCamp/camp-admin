@@ -18,6 +18,10 @@ const enhance = compose(
       answers: state.grading.answers,
       graderNote: state.grading.note,
       activities: state.grading.activities,
+      academicYear: state.grading.academicYear,
+      faculty: state.grading.faculty,
+      department: state.grading.department,
+      university: state.grading.university,
       candidateCount: state.grading.candidateCount
     }),
     {...gradingActions}
@@ -111,6 +115,10 @@ const MajorList = props => {
                 answers={props.answers}
                 activities={props.activities}
                 doneGrading={() => props.getMajorList(props.user.role).then(() => props.getCandidateCount()).then(() => props.setCurrentId(''))}
+                academicYear={props.academicYear}
+                faculty={props.faculty}
+                department={props.department}
+                university={props.university}
               />
             </GradingContainer>
           )}

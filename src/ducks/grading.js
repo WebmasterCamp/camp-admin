@@ -97,6 +97,10 @@ export default (state = initialState, action) => {
         answers: action.data.answers,
         note: action.data.note ? action.data.note.note : '',
         activities: action.data.activities,
+        academicYear: action.data.academicYear,
+        faculty: action.data.faculty,
+        department: action.data.department,
+        university: action.data.university,
         isLoadingItem: false
       };
     case LOAD_CANDIDATE_COUNT.RESOLVED:
@@ -170,7 +174,7 @@ export const actions = {
   getMajorItem: (major, id) => ({
     type: GET_MAJOR_ANSWERS,
     promise: api.get(`/grading/major/${major}/${id}`),
-    error: "Fail to load list, If it's happen again please contact staff"
+    error: "Fail to load item, If it's happen again please contact staff"
   }),
   gradeMajorItem: (major, id, pass, note) => ({
     type: GRADE_MAJOR_ITEM,

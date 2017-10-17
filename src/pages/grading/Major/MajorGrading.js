@@ -61,6 +61,10 @@ const MajorGrading = props => {
   return (
     <div>
       <p>ID: {props.userId}</p>
+      <p><b>ชั้นปี: </b>{props.academicYear}</p>
+      <p><b>คณะ: </b>{props.faculty}</p>
+      <p><b>สาขา: </b>{props.department}</p>
+      <p><b>สถาบัน: </b>{props.university}</p>
       {answers.map((answer, idx) => <AnswerItem answer={answer.answer} question={specialQuestions[major][idx]} key={`answer-${idx}`} isLink={major === 'design' && idx === 3} />)}
       <AnswerItem answer={activities} question="กิจกรรมที่เคยทำ" />
       <Label>Note</Label>
