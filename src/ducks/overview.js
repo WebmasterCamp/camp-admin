@@ -14,7 +14,8 @@ const initialState = {
     content: '-',
     pending: '-',
     notConfirm: '-'
-  }
+  },
+  byDayStat: []
 };
 
 export default (state = initialState, action) => {
@@ -22,7 +23,8 @@ export default (state = initialState, action) => {
     case GET_STAT.RESOLVED:
       return {
         ...state,
-        stat: action.data    
+        stat: action.data[0],
+        byDayStat: action.data[1]
       };
     default: return state;
   }
@@ -31,6 +33,9 @@ export default (state = initialState, action) => {
 export const actions = {
   getRegisterStat: () => ({
     type: GET_STAT,
-    promise: api.get('/users/stat/all')
-  }),
+    promise: Promise.all([
+      api.get('/users/stat/all'),
+      api.get('/users/by-day-stat')
+    ]).then(res => ({ data: res.map(obj => obj.data) }))
+  })
 };

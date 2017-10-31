@@ -2,7 +2,8 @@ import React from 'react';
 import { compose, lifecycle } from 'recompose';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Card, Col, Row, Progress, Icon } from 'antd';
+import { Card, Col, Row, Progress, Icon, Table } from 'antd';
+import moment from 'moment';
 
 import { redirectIfNotLoggedIn } from '../utils/redirect';
 import { actions as overviewActions } from '../ducks/overview';
@@ -14,6 +15,7 @@ const enhance = compose(
     state => ({
       stat: state.overview.stat,
       gradingStat: state.grading.stat,
+      byDayStat: state.overview.byDayStat,
       isLoading: state.grading.isLoadingStat && state.overview.isLoading
     }),
     { ...overviewActions, ...gradingActions }
@@ -63,17 +65,39 @@ const StageTitle = styled.h3`
   margin-bottom: 15px;
 `;
 
+const byDayStatColumns = [
+  {
+    title: 'Date',
+    dataIndex: '_id',
+    render: text => <p>{moment(text, 'YYYY-DD-MM').format('M/D/YYYY')}</p>
+  },
+  {
+    title: 'Count',
+    dataIndex: 'count',
+    render: text => <p>{text}</p>
+  },
+]
+
 const getPercentage = (stat, key) => (key ? stat.graded[key] : stat.graded) * 100/stat.all;
 const getText = (stat, key) => `${key ? stat.graded[key] : stat.graded}/${stat.all}`
 
 const Overview = props => {
   if (props.isLoading) return <Icon type="loading" />
-  const { gradingStat } = props;
+  const { gradingStat, byDayStat } = props;
   const { stageOne, stageTwo, programming, design, marketing, content } = gradingStat;
   return (
     <div>
       <SectionContainer>
         <SectionTitle>Register Statatistics</SectionTitle>
+        <Table
+          dataSource={byDayStat}
+          columns={byDayStatColumns}
+          bordered
+          rowKey="_id"
+        />
+      </SectionContainer>
+      <SectionContainer>
+        <SectionTitle>By Registrant State</SectionTitle>
         <Row gutter={16} style={{ marginBottom: 20 }}>
           <Col span={6}>
             <MajorCard>
