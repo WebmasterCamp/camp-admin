@@ -67,9 +67,9 @@ const StageTitle = styled.h3`
 
 const byDayStatColumns = [
   {
-    title: 'Date',
+    title: 'Date (Day/Month/Year)',
     dataIndex: '_id',
-    render: text => <p>{moment(text, 'YYYY-DD-MM').format('M/D/YYYY')}</p>
+    render: text => <p>{moment(text, 'YYYY-MM-DD').format('DD/MM/YYYY')}</p>
   },
   {
     title: 'Count',
