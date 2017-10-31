@@ -94,10 +94,12 @@ const Overview = props => {
           columns={byDayStatColumns}
           bordered
           rowKey="_id"
+          size="middle"
+          pagination={{ defaultPageSize: 5 }}
         />
       </SectionContainer>
       <SectionContainer>
-        <SectionTitle>By Registrant State</SectionTitle>
+        <SectionTitle>By Registrant Status</SectionTitle>
         <Row gutter={16} style={{ marginBottom: 20 }}>
           <Col span={6}>
             <MajorCard>
