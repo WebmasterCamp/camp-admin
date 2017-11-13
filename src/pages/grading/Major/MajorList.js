@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose, withProps, withState, lifecycle } from 'recompose';
-import { Table, Tag, Col, Row } from 'antd';
+import { Table, Tag, Col, Row, Radio, Progress } from 'antd';
 import _ from 'lodash';
 import styled from 'styled-components';
 
@@ -27,16 +27,24 @@ const enhance = compose(
     {...gradingActions}
   ),
   withState('currentId', 'setCurrentId', ''),
+  withState('filter', 'setFilter', 'off'),
   withProps(
     ownProps => ({
-      lists: ownProps.lists.map((item) => ({
-        key: item._id,
-        id: item._id,
-        status: _.isEmpty(item.questions.stageThree) ? '-' : item.questions.stageThree.isPass ? 'Pass' : 'Fail',
-        note: _.isEmpty(item.questions.stageThree) ? '' : item.questions.stageThree.note
-      })),
+      lists: ownProps.lists
+        .map((item) => ({
+          key: item._id,
+          id: item._id,
+          status: _.isEmpty(item.questions.stageThree) ? '-' : item.questions.stageThree.isPass ? 'Pass' : 'Fail',
+          note: _.isEmpty(item.questions.stageThree) ? '' : item.questions.stageThree.note
+        }))
+        .filter(item => {
+          if (ownProps.filter === 'off') return true;
+          return item.status === ownProps.filter
+        }),
       loadGradingItem: id => ownProps.getMajorItem(ownProps.user.role, id).then(() => ownProps.setCurrentId(id)),
-      getCandidateCount: () => ownProps.getCandidateCount(ownProps.user.role)
+      getCandidateCount: () => ownProps.getCandidateCount(ownProps.user.role),
+      gradedCount: ownProps.lists.filter(item => !_.isEmpty(item.questions.stageThree)).length,
+      allCount: ownProps.lists.length
     })
   ),
   lifecycle({
@@ -90,11 +98,45 @@ const CandidateCount = styled.span`
   ${props => props.exceed && `color: red; font-weight: bold;`}
 `;
 
+const Label = styled.div`
+  margin-bottom: 5px;
+  font-weight: bold;
+`;
+
+const FilterContainer = styled.div`
+  margin-bottom: 10px;
+  font-size: 14px;
+`;
+
+const ProgressContainer = styled.div`
+  margin-bottom: 10px;
+  ${CandidateTitle} {
+    margin-bottom: 5px;
+  }
+`;
+
 const MajorList = props => {
   return (
     <div>
       <h1>Grading</h1>
       <CandidateTitle>Pass: <CandidateCount exceed={props.candidateCount > 60}>{props.candidateCount}</CandidateCount>/60</CandidateTitle>
+      <ProgressContainer>
+        <Row>
+          <Col span={8}>
+            <CandidateTitle>Grading Progress</CandidateTitle>
+            <Progress percent={(props.gradedCount / props.allCount) * 100} format={() => `${props.gradedCount}/${props.allCount}`} />
+          </Col>
+        </Row>
+      </ProgressContainer>
+      <FilterContainer>
+        <Label>Filter</Label>
+        <Radio.Group onChange={e => props.setFilter(e.target.value)} value={props.filter}>
+          <Radio.Button value="Pass">Pass</Radio.Button>
+          <Radio.Button value="Fail">Nope</Radio.Button>
+          <Radio.Button value="-">Not Graded</Radio.Button>
+          <Radio.Button value="off">Off</Radio.Button>
+        </Radio.Group>
+      </FilterContainer>
       <Row gutter={16}>
         <Col span={8}>
           <Table
