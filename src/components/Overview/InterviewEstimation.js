@@ -18,7 +18,7 @@ const MajorCount = styled.h3`
 
 const toPassCount = {
   design: 1,
-  programming: 2,
+  programming: 3,
   content: 2,
   marketing: 1
 };
