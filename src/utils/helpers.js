@@ -14,4 +14,4 @@ export const getPdfPath = path => {
   return path;
 }
 
-export const majorAsText = major => `Web ${major.charAt(0).toUpperCase()}${major.slice(1)}`;
+export const majorAsText = (major, short = false) => `${short ? '' : 'Web '}${major.charAt(0).toUpperCase()}${major.slice(1)}`;

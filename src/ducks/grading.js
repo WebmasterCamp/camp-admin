@@ -153,6 +153,7 @@ export const actions = {
       api.get('/grading/major/design/stat'),
       api.get('/grading/major/marketing/stat'),
       api.get('/grading/major/content/stat'),
+      api.get('/grading/criteria-analyze')
     ])
     .then(([
       { data: stageOne },
@@ -161,8 +162,9 @@ export const actions = {
       { data: design },
       { data: marketing },
       { data: content },
+      { data: interviewEstimation }
     ]) => ({
-      data: { stageOne, stageTwo, programming, design, marketing, content }
+      data: { stageOne, stageTwo, programming, design, marketing, content, interviewEstimation }
     })),
     error: 'Fail to load grading status'
   }),
