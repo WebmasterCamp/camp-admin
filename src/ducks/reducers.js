@@ -5,6 +5,7 @@ import adminUser from './adminUser';
 import grading from './grading';
 import user from './user';
 import registrant from './registrant';
+import interview from './interview';
 
 export default {
   auth,
@@ -13,5 +14,6 @@ export default {
   adminUser,
   grading,
   user,
-  registrant
+  registrant,
+  interview
 };

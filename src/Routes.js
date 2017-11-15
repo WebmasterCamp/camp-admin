@@ -19,6 +19,7 @@ import User from './pages/users/User';
 import Affiliate from './pages/affiliate/Affiliate';
 import UserManagement from './pages/user-management/UserManagement';
 import InteviewCandidate from './pages/Registrant/InteviewCandidate';
+import Interviewer from './pages/interviewer/Interviewer';
 import Logout from './pages/auth/Logout';
 import Login from './pages/auth/Login';
 // import Proxying from './pages/Proxying';
@@ -127,6 +128,12 @@ const Routes = props => (
             <span>Grading</span>
           </Link> 
         </Menu.Item>}
+        {['design', 'marketing', 'programming', 'content'].indexOf(props.user.role) !== -1 && <Menu.Item key="Interviewer">
+          <Link to="/interviewer">
+            <Icon type="user" />
+            <span>Interviewer</span>
+          </Link> 
+        </Menu.Item>}
         {props.user.role === 'admin' && (
           <SubMenu key="registrant-menu" title={<p><Icon type="user" /> Registrant</p>}>
             <Menu.Item key="registrant">
@@ -177,6 +184,9 @@ const Routes = props => (
         {props.user.role === 'stage-2' && <StageTwoRoute user={props.user} path="/grading" exact component={StageTwoList} />}
         {(props.user.role === 'marketing' || props.user.role === 'content' || props.user.role === 'programming' || props.user.role === 'design') && (
           <MajorRoute user={props.user} path="/grading" exact component={MajorList} />
+        )}
+        {(props.user.role === 'marketing' || props.user.role === 'content' || props.user.role === 'programming' || props.user.role === 'design') && (
+          <MajorRoute user={props.user} path="/interviewer" exact component={Interviewer} />
         )}
         {/* <Route path="/" exact component={Proxying} /> */}
         {/* <Redirect from='*' to='/login' /> */}
