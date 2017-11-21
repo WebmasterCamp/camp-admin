@@ -86,9 +86,9 @@ const UserManagement = props => {
     <div>
       <Title>User Management</Title>
       <ActionSpan>
-        <Input style={{ width: 200 }} placeholder="Username" onChange={e => props.setUsername(e.target.value)} />
-        <Input style={{ width: 200 }} placeholder="Password" onChange={e => props.setPassword(e.target.value)} />
-        <Select style={{ width: 240 }} placeholder="Role" onChange={(value) => props.setRole(value)}>
+        <Input style={{ width: 200 }} placeholder="Username" value={props.username} onChange={e => props.setUsername(e.target.value)} />
+        <Input style={{ width: 200 }} placeholder="Password" value={props.password} onChange={e => props.setPassword(e.target.value)} />
+        <Select style={{ width: 240 }} placeholder="Role" value={props.role} onChange={(value) => props.setRole(value)}>
           <Select.Option value="admin">Admin</Select.Option>
           <Select.Option value="stage-1">Grader - YWC14</Select.Option>
           <Select.Option value="stage-2">Grader - Stage Two</Select.Option>
@@ -96,6 +96,7 @@ const UserManagement = props => {
           <Select.Option value="programming">Grader - Programming</Select.Option>
           <Select.Option value="content">Grader - Content</Select.Option>
           <Select.Option value="marketing">Grader - Marketing</Select.Option>
+          <Select.Option value="queue">Queue Runner</Select.Option>  
         </Select>
         <Popconfirm
           title="Are you sure?"

@@ -20,6 +20,7 @@ import Affiliate from './pages/affiliate/Affiliate';
 import UserManagement from './pages/user-management/UserManagement';
 import InteviewCandidate from './pages/Registrant/InteviewCandidate';
 import Interviewer from './pages/interviewer/Interviewer';
+import QueuePage from './pages/queue/QueuePage';
 import Logout from './pages/auth/Logout';
 import Login from './pages/auth/Login';
 // import Proxying from './pages/Proxying';
@@ -99,6 +100,18 @@ const MajorRoute = ({ component: Component, user, ...rest }) => (
   )}/>
 );
 
+const QueueRunnerRoute = ({ component: Component, user, ...rest }) => (
+  <Route {...rest} render={props => (
+    user.role === 'queue' ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+      }}/>
+    )
+  )}/>
+);
+
 const Routes = props => (
   <StyledLayout>
     <Sider
@@ -122,7 +135,7 @@ const Routes = props => (
             <span>Overview</span>
           </Link> 
         </Menu.Item>}
-        {['design', 'marketing', 'programming', 'content', 'stage-1', 'stage-2'].indexOf(props.user.role) !== -1 && <Menu.Item key="grading">
+        {false && ['design', 'marketing', 'programming', 'content', 'stage-1', 'stage-2'].indexOf(props.user.role) !== -1 && <Menu.Item key="grading">
           <Link to="/grading">
             <Icon type="edit" />
             <span>Grading</span>
@@ -160,6 +173,12 @@ const Routes = props => (
             <span>Admin Management</span>
           </Link>
         </Menu.Item>}
+        {props.user.role === 'queue' && <Menu.Item key="admin-management">
+          <Link to="/queue">
+            <Icon type="user" />
+            <span>Queue Runner</span>
+          </Link>
+        </Menu.Item>}
         {props.isLoggedIn && <Menu.Item key="logout">
           <Link to="/logout">
             <Icon type="poweroff" />
@@ -188,6 +207,7 @@ const Routes = props => (
         {(props.user.role === 'marketing' || props.user.role === 'content' || props.user.role === 'programming' || props.user.role === 'design') && (
           <MajorRoute user={props.user} path="/interviewer" exact component={Interviewer} />
         )}
+        {props.user.role === 'queue' && <QueueRunnerRoute user={props.user} path="/queue" exact component={QueuePage} />}
         {/* <Route path="/" exact component={Proxying} /> */}
         {/* <Redirect from='*' to='/login' /> */}
       </Content>

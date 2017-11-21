@@ -3,7 +3,7 @@ import api from '../utils/api';
 
 const interviewAction = actionCreator('interview');
 
-const GET_INTERVIEWER = interviewAction('', true);
+const GET_INTERVIEWER = interviewAction('GET_INTERVIEWER', true);
 
 const initialState = {
   isLoading: false,

@@ -29,8 +29,10 @@ const enhance = compose(
           .then((resp) => {
             if (resp.data.role === 'admin') {
               ownProps.history.push('/overview');
+            } else if (resp.data.role === 'queue') {
+              ownProps.history.push('/queue');
             } else {
-              ownProps.history.push('/grading');
+              ownProps.history.push('/interviewer');
             }
           })
       }

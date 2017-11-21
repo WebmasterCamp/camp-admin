@@ -6,6 +6,7 @@ import grading from './grading';
 import user from './user';
 import registrant from './registrant';
 import interview from './interview';
+import queue from './queue';
 
 export default {
   auth,
@@ -15,5 +16,6 @@ export default {
   grading,
   user,
   registrant,
-  interview
+  interview,
+  queue
 };
