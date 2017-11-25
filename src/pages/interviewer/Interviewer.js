@@ -67,7 +67,7 @@ const Interviewer = props => {
           {isError && <p>User Not found.</p>}
           {!isError && interviewer && (
             <div>
-              <RegistrantProfile {...interviewer} />
+              <RegistrantProfile {...interviewer} showFacebook />
               <QuestionContainer>
                 <Title>คำถามกลาง</Title>
                 {interviewer.questions.generalQuestions.map((answer, idx) => (

@@ -32,6 +32,7 @@ const AvatarImage = styled.div`
 `;
 
 const RegistrantProfile = props => {
+  const { showFacebook = false } = props;
   return (
     <div>
       <Card loading={props.isLoading} noHovering>
@@ -50,6 +51,12 @@ const RegistrantProfile = props => {
             <Question>เพศ: </Question>
             <Answer>{props.sex}</Answer>
           </p>
+          {showFacebook && (
+            <p>
+              <Question>Facebook: </Question>
+              <Answer><a href={`https://www.facebook.com/${props.facebook}`} target="_blank">ดูเฟสบุ๊คน้อง</a></Answer>
+            </p>
+          )}
         </Col>
         <Col span={8}>
           <p>
