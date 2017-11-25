@@ -1,17 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { compose, withState, withProps } from 'recompose';
+import { compose, withState, withProps, lifecycle } from 'recompose';
 import { Input as _Input, Button, Icon } from 'antd';
 import styled from 'styled-components';
+import io from 'socket.io-client';
+import _ from 'lodash';
 
 import { actions as interviewActions } from '../../ducks/interview';
 import RegistrantProfile from '../../components/Registrant/RegistrantProfile';
 import QuestionCard from '../../components/Registrant/QuestionCard';
 import questions from '../grading/questions.json';
 import { getPdfPath } from '../../utils/helpers';
+import config from '../../config';
 
 const Title = styled.h2`
   margin-bottom: 10px;
+`;
+
+const Highlight = styled.span`
+  color: red;
 `;
 
 const Input = styled(_Input)`
@@ -33,23 +40,39 @@ const enhance = compose(
       isLoading: state.interview.isLoading,
       isError: state.interview.isError,
       interviewer: state.interview.interviewer,
+      user: state.auth.user
     }),
     { ...interviewActions }
   ),
   withState('refID', 'setRefID', ''),
+  withState('currentQueue', 'setQueue', '---'),
   withProps(
     props => ({
       onSearch: () => props.getInterviewer(props.refID.toUpperCase())
         .then(() => props.setRefID(''))
     })
-  )
+  ),
+  lifecycle({
+    componentDidMount() {
+      const socket = io(config.apiPath, {
+        path: '/socket.io',
+        transports: ['websocket'],
+        secure: true,
+      });
+      socket.on('queue', (data) => {
+        const { role } = this.props.user;
+        this.props.setQueue(`${role[0].toUpperCase()}${_.padStart(data[role], 2, '0')}`);
+      });
+    }
+  })
 );
 
 const Interviewer = props => {
-  const { refID, interviewer, isLoading, isError } = props;
+  const { refID, interviewer, isLoading, isError, currentQueue } = props;
   return (
     <div>
       <Container>
+        <Title>คิวหน้าเว็บ (คนสุดท้ายที่อยู่หน้าห้อง): <Highlight>{currentQueue}</Highlight></Title>
         <Title>Search Interviewer by RefID</Title>
         <form
           onSubmit={(e) => {

@@ -22,6 +22,7 @@
     "redux-define": "^1.1.1",
     "redux-thunk": "^2.2.0",
     "serve": "^6.0.6",
+    "socket.io-client": "^2.0.4",
     "styled-components": "^2.1.2"
   },
   "scripts": {
