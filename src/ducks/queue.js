@@ -50,8 +50,8 @@ export const actions = {
     type: GET_QUEUE,
     promise: api.get(`/queues/${major}`)
   }),
-  increaseQueue: (major) => ({
+  increaseQueue: (major, isDecrease = false) => ({
     type: INCREASE_QUEUE,
-    promise: api.post(`/queues/${major}`)
+    promise: api.post(`/queues/${major}`, { isDecrease })
   }),
 };

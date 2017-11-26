@@ -47,7 +47,7 @@ const enhance = compose(
   ),
   withProps(
     props => ({
-      onProceedQueue: () => props.increaseQueue(props.major)
+      onProceedQueue: (isDecrease = false) => props.increaseQueue(props.major, isDecrease)
         .then(() => props.getQueue(props.major))
     })
   ),
@@ -68,8 +68,10 @@ const QueuePage = props => {
     <Container>
       <Title>Current Queue</Title>
       <Queue>{major[0].toUpperCase()}{_.padStart(order, 2, '0')}</Queue>
-      <IncreaseButton type="primary" loading={isIncreasingQueue} onClick={() => props.onProceedQueue()}>เพิ่มเลขคิว</IncreaseButton>
-      <Description>กดเพิ่มเลขคิว เมื่อน้องเข้าห้องสัมแล้ว</Description>
+      <IncreaseButton type="primary" loading={isIncreasingQueue} onClick={() => props.onProceedQueue(false)}>เพิ่มเลขคิว</IncreaseButton>
+      <IncreaseButton type="danger" loading={isIncreasingQueue} onClick={() => props.onProceedQueue(true)}>ลดเลขคิว (พลาดแล้ว...)</IncreaseButton>
+      <Description>กดเพิ่มเลขคิว เมื่อจะเรียกน้องมารอหน้าห้องเพิ่ม</Description>
+      <Description>(เลขคิวที่ขึ้นควรเป็นเลขคิวของน้องคนสุดท้ายที่รอหน้าห้อง)</Description>
       <Description>อย่ากดเบิ้ล!!!!!! กดทีละครั้ง เลขเปลี่ยนค่อยกด</Description>
       <Description>ขอโทษที่บน Mobile หน้าตามันเละๆ 555</Description>
     </Container>
