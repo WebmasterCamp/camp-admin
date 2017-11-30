@@ -23,6 +23,7 @@ import Interviewer from './pages/interviewer/Interviewer';
 import QueuePage from './pages/queue/QueuePage';
 import Logout from './pages/auth/Logout';
 import Login from './pages/auth/Login';
+import Slip from './pages/slips';
 // import Proxying from './pages/Proxying';
 
 const { Sider, Content } = Layout;
@@ -161,6 +162,20 @@ const Routes = props => (
             </Menu.Item>
           </SubMenu>
         )}
+        {props.user.role === 'admin' && <Menu.Item key="finalists">
+          <Link to="/finalists">
+            <Icon type="user" />
+            <span>Finalists</span>
+          </Link>
+        </Menu.Item>}
+        {props.user.role === 'admin' && (
+          <Menu.Item key="slip">
+            <Link to="/slips">
+              <Icon type="credit-card" />
+              <span>Slip</span>
+            </Link>
+          </Menu.Item>
+        )}
         {props.user.role === 'admin' && <Menu.Item key="affiliate">
           <Link to="/affiliate">
             <Icon type="link" />
@@ -199,6 +214,8 @@ const Routes = props => (
         <AdminRoute user={props.user} path="/registrant/:id" exact component={Registrant} />
         <AdminRoute user={props.user} path="/user-management" exact component={UserManagement} />
         <AdminRoute user={props.user} path="/interview-candidate" exact component={InteviewCandidate} />
+        <AdminRoute user={props.user} path="/slips" exact component={Slip} />
+        <AdminRoute user={props.user} path="/finalists" exact component={UserManagement} />
         {props.user.role === 'stage-1' && <StageOneRoute user={props.user} path="/grading" exact component={StageOneList} />}
         {props.user.role === 'stage-2' && <StageTwoRoute user={props.user} path="/grading" exact component={StageTwoList} />}
         {(props.user.role === 'marketing' || props.user.role === 'content' || props.user.role === 'programming' || props.user.role === 'design') && (

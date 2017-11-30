@@ -7,6 +7,7 @@ import user from './user';
 import registrant from './registrant';
 import interview from './interview';
 import queue from './queue';
+import slip from './slip';
 
 export default {
   auth,
@@ -17,5 +18,6 @@ export default {
   user,
   registrant,
   interview,
-  queue
+  queue,
+  slip
 };

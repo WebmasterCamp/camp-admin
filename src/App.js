@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import styled from 'styled-components';
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 
 import Routes from './Routes';
 import Loading from './pages/Loading';
@@ -33,9 +35,11 @@ class App extends Component {
       return <Loading />;
     }
     return (
-      <AppContainer>
-        <Routes />
-      </AppContainer>
+      <LocaleProvider locale={enUS}>
+        <AppContainer>
+          <Routes />
+        </AppContainer>
+      </LocaleProvider>
     );
   }
 }
