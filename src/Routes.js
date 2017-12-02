@@ -227,7 +227,7 @@ const Routes = props => (
         <AdminRoute user={props.user} path="/user-management" exact component={UserManagement} />
         <AdminRoute user={props.user} path="/interview-candidate" exact component={InteviewCandidate} />
         {props.user.role === 'admin' && <AdminRoute user={props.user} path="/slips" exact component={Slip} />}
-        {props.user.role === 'slip' && <SlipRoute user={props.user} path="/slips" exact component={Slip} />}
+        {props.user.role === 'slips' && <SlipRoute user={props.user} path="/slips" exact component={Slip} />}
         <AdminRoute user={props.user} path="/finalists" exact component={UserManagement} />
         {props.user.role === 'stage-1' && <StageOneRoute user={props.user} path="/grading" exact component={StageOneList} />}
         {props.user.role === 'stage-2' && <StageTwoRoute user={props.user} path="/grading" exact component={StageTwoList} />}
