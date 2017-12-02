@@ -16,6 +16,7 @@ const columns = (props, withAction = false) => {
   const col = [
     { title: 'Amount', dataIndex: 'transfer_money', width: 100, render: (text) => <b>{text}</b> },
     { title: 'Name', dataIndex: 'name', width: 150 },
+    { title: 'Time', dataIndex: 'transfer_at', width: 220 },
     {
       title: 'Slip Image',
       render: (text, item) => (
