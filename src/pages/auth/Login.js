@@ -31,6 +31,8 @@ const enhance = compose(
               ownProps.history.push('/overview');
             } else if (resp.data.role === 'queue') {
               ownProps.history.push('/queue');
+            } else if (resp.data.role === 'slips') {
+              ownProps.history.push('/slips');
             } else {
               ownProps.history.push('/interviewer');
             }
