@@ -70,7 +70,6 @@ const SlipPage = props => {
   const { loading } = props;
   if (loading) return <Icon type="loading" />
   const { slips } = props;
-  console.log(slips);
   return (
     <Collapse defaultActiveKey={['pending', 'confirm', 'not confirm']}>
       <Collapse.Panel key="pending" header="Pending">
