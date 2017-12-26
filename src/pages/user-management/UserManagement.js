@@ -98,6 +98,7 @@ const UserManagement = props => {
           <Select.Option value="marketing">Grader - Marketing</Select.Option>
           <Select.Option value="queue">Queue Runner</Select.Option>
           <Select.Option value="slips">Slips Approver</Select.Option>
+          <Select.Option value="score">Score</Select.Option>
         </Select>
         <Popconfirm
           title="Are you sure?"

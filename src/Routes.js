@@ -21,6 +21,7 @@ import UserManagement from './pages/user-management/UserManagement';
 import InteviewCandidate from './pages/Registrant/InteviewCandidate';
 import Interviewer from './pages/interviewer/Interviewer';
 import QueuePage from './pages/queue/QueuePage';
+import ScoreManagePage from './pages/score/ScoreManagePage';
 import Logout from './pages/auth/Logout';
 import Login from './pages/auth/Login';
 import Slip from './pages/slips';
@@ -125,6 +126,18 @@ const SlipRoute = ({ component: Component, user, ...rest }) => (
   )}/>
 );
 
+const ScoreRoute = ({ component: Component, user, ...rest }) => (
+  <Route {...rest} render={props => (
+    user.role === 'score' ? (
+      <Component {...props}/>
+    ) : (
+      <Redirect to={{
+        pathname: '/login',
+      }}/>
+    )
+  )}/>
+);
+
 const Routes = props => (
   <StyledLayout>
     <Sider
@@ -178,6 +191,12 @@ const Routes = props => (
           <Link to="/finalists">
             <Icon type="user" />
             <span>Finalists</span>
+          </Link>
+        </Menu.Item>}
+        {props.user.role === 'score' && <Menu.Item key="score">
+          <Link to="/score">
+            <Icon type="user" />
+            <span>Score</span>
           </Link>
         </Menu.Item>}
         {(props.user.role === 'admin' || props.user.role === 'slips') && (
@@ -238,6 +257,7 @@ const Routes = props => (
           <MajorRoute user={props.user} path="/interviewer" exact component={Interviewer} />
         )}
         {props.user.role === 'queue' && <QueueRunnerRoute user={props.user} path="/queue" exact component={QueuePage} />}
+        {props.user.role === 'score' && <ScoreRoute user={props.user} path="/score" exact  component={ScoreManagePage} />}
         {/* <Route path="/" exact component={Proxying} /> */}
         {/* <Redirect from='*' to='/login' /> */}
       </Content>
