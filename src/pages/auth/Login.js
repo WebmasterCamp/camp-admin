@@ -1,48 +1,45 @@
-import React from 'react';
-import { Form, Icon, Input, Button } from 'antd';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { compose, withState, withProps } from 'recompose';
-import styled from 'styled-components';
+import React from 'react'
+import { Form, Icon, Input, Button } from 'antd'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { compose, withState, withProps } from 'recompose'
+import styled from 'styled-components'
 
-import { actions as authActions } from '../../ducks/auth';
+import { actions as authActions } from '../../ducks/auth'
 
-const FormItem = Form.Item;
+const FormItem = Form.Item
 
 const enhance = compose(
   // redirectIfLoggedIn,
   withRouter,
   connect(
     state => ({
-      user: state.auth.user
+      user: state.auth.user,
     }),
-    { ...authActions }
+    { ...authActions },
   ),
   withState('username', 'setUsername', ''),
   withState('password', 'setPassword', ''),
-  withProps(
-    ownProps => ({
-      handleLogin: e => {
-        e.preventDefault();
-        const { username, password } = ownProps;
-        ownProps.login(username, password)
-          .then((resp) => {
-            if (resp.data.role === 'admin') {
-              ownProps.history.push('/overview');
-            } else if (resp.data.role === 'queue') {
-              ownProps.history.push('/queue');
-            } else if (resp.data.role === 'slips') {
-              ownProps.history.push('/slips');
-            } else if (resp.data.role === 'score') {
-              ownProps.history.push('/score');
-            } else {
-              ownProps.history.push('/interviewer');
-            }
-          })
-      }
-    })
-  )
-);
+  withProps(ownProps => ({
+    handleLogin: e => {
+      e.preventDefault()
+      const { username, password } = ownProps
+      ownProps.login(username, password).then(resp => {
+        if (resp.data.role === 'admin') {
+          ownProps.history.push('/overview')
+        } else if (resp.data.role === 'queue') {
+          ownProps.history.push('/queue')
+        } else if (resp.data.role === 'slips') {
+          ownProps.history.push('/slips')
+        } else if (resp.data.role === 'score') {
+          ownProps.history.push('/score')
+        } else {
+          ownProps.history.push('/interviewer')
+        }
+      })
+    },
+  })),
+)
 
 const Container = styled.div`
   display: flex;
@@ -50,20 +47,20 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-`;
+`
 
 const FormContainer = styled(Form).attrs({
-  className: 'login-form'
+  className: 'login-form',
 })`
   width: 300px;
   > div {
     margin-bottom: 15px;
   }
-`;
+`
 
 const Title = styled.h1`
   margin-bottom: 10px;
-`;
+`
 
 const Login = props => {
   return (
@@ -82,18 +79,23 @@ const Login = props => {
           <Input
             onChange={e => props.setPassword(e.target.value)}
             value={props.password}
-            prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password"
+            prefix={<Icon type="lock" style={{ fontSize: 13 }} />}
+            type="password"
             placeholder="Password"
           />
         </FormItem>
         <FormItem>
-          <Button type="primary" htmlType="submit" className="login-form-button">
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
             Log in
           </Button>
         </FormItem>
       </FormContainer>
     </Container>
-  );
+  )
 }
 
-export default enhance(Login);
+export default enhance(Login)

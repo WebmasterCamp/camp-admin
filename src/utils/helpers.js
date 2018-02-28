@@ -1,17 +1,18 @@
-import { apiPath } from '../config';
+import { apiPath } from '../config'
 
-export const getImagePath = (img) => {
+export const getImagePath = img => {
   if (img && img.indexOf('uploads') !== -1) {
-    return `${apiPath}/${img}`;
+    return `${apiPath}/${img}`
   }
-  return img;
-};
+  return img
+}
 
 export const getPdfPath = path => {
   if (path && path.indexOf('uploads') !== -1) {
-    return `${apiPath}/${path}`;
+    return `${apiPath}/${path}`
   }
-  return path;
+  return path
 }
 
-export const majorAsText = (major, short = false) => `${short ? '' : 'Web '}${major.charAt(0).toUpperCase()}${major.slice(1)}`;
+export const majorAsText = (major, short = false) =>
+  `${short ? '' : 'Web '}${major.charAt(0).toUpperCase()}${major.slice(1)}`

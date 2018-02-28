@@ -1,21 +1,18 @@
-import { connect } from 'react-redux';
-import { compose, lifecycle } from 'recompose';
+import { connect } from 'react-redux'
+import { compose, lifecycle } from 'recompose'
 
-import { actions as authActions } from '../../ducks/auth';
+import { actions as authActions } from '../../ducks/auth'
 
 const enhance = compose(
-  connect(
-    null,
-    { ...authActions }
-  ),
+  connect(null, { ...authActions }),
   lifecycle({
     componentDidMount() {
-      this.props.logout();
-      this.props.history.push('/login');
-    }
-  })
-);
+      this.props.logout()
+      this.props.history.push('/login')
+    },
+  }),
+)
 
-const Logout = () => null;
+const Logout = () => null
 
-export default enhance(Logout);
+export default enhance(Logout)

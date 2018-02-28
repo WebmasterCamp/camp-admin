@@ -1,18 +1,18 @@
-import React from 'react';
-import { Col, Row, Card } from 'antd';
-import styled from 'styled-components';
+import React from 'react'
+import { Col, Row, Card } from 'antd'
+import styled from 'styled-components'
 
 const MajorCard = styled(Card)`
   text-align: center;
-`;
+`
 
 const MajorTitle = styled.h3`
   font-size: 16px;
-`;
+`
 
 const MajorCount = styled.h3`
   font-size: 40px;
-`;
+`
 
 const RegistrationStat = props => {
   return (
@@ -58,7 +58,7 @@ const RegistrationStat = props => {
         </Col>
       </Row>
     </div>
-  );
-};
+  )
+}
 
-export default RegistrationStat;
+export default RegistrationStat

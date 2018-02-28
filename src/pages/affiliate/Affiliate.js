@@ -1,26 +1,26 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Button, Popconfirm } from 'antd';
-import { compose, lifecycle, withProps } from 'recompose';
-import { connect } from 'react-redux';
+import React from 'react'
+import styled from 'styled-components'
+import { Button, Popconfirm } from 'antd'
+import { compose, lifecycle, withProps } from 'recompose'
+import { connect } from 'react-redux'
 
-import AffiliateTable from '../../components/Affiliate/AffiliateTable';
-import { redirectIfNotLoggedIn } from '../../utils/redirect';
-import { actions as affiliateActions } from '../../ducks/affiliate';
+import AffiliateTable from '../../components/Affiliate/AffiliateTable'
+import { redirectIfNotLoggedIn } from '../../utils/redirect'
+import { actions as affiliateActions } from '../../ducks/affiliate'
 
 const SectionTitle = styled.h2`
   margin-bottom: 10px;
-`;
+`
 
 const TableSection = styled.div`
   padding: 10px 0;
-`;
+`
 
 const ActionSpan = styled.span`
   > * {
     margin-right: 10px;
   }
-`;
+`
 
 const enhance = compose(
   redirectIfNotLoggedIn,
@@ -28,34 +28,32 @@ const enhance = compose(
     state => ({
       approvedAffiliate: state.affiliate.approvedAffiliate,
       unapprovedAffiliate: state.affiliate.unapprovedAffiliate,
-      isLoading: state.affiliate.isLoading
+      isLoading: state.affiliate.isLoading,
     }),
-    {...affiliateActions}
+    { ...affiliateActions },
   ),
-  withProps(
-    ownProps => ({
-      approvedAffiliate: ownProps.approvedAffiliate.map((item) => ({
-        key: item._id,
-        id: item._id,
-        name: item.name,
-        url: item.url
-      })),
-      unapprovedAffiliate: ownProps.unapprovedAffiliate.map((item) => ({
-        key: item._id,
-        id: item._id,
-        name: item.name,
-        url: item.url
-      }))
-    })
-  ),
+  withProps(ownProps => ({
+    approvedAffiliate: ownProps.approvedAffiliate.map(item => ({
+      key: item._id,
+      id: item._id,
+      name: item.name,
+      url: item.url,
+    })),
+    unapprovedAffiliate: ownProps.unapprovedAffiliate.map(item => ({
+      key: item._id,
+      id: item._id,
+      name: item.name,
+      url: item.url,
+    })),
+  })),
   lifecycle({
     componentDidMount() {
-      this.props.getAffiliate();
-    }
+      this.props.getAffiliate()
+    },
   }),
-);
+)
 
-const approvedTableAction = (props) => ({
+const approvedTableAction = props => ({
   title: 'Action',
   key: 'action',
   width: 250,
@@ -67,7 +65,9 @@ const approvedTableAction = (props) => ({
         okText="Yes"
         cancelText="No"
       >
-        <Button type="primary" icon="check">Approved</Button>
+        <Button type="primary" icon="check">
+          Approved
+        </Button>
       </Popconfirm>
       <Popconfirm
         title="Are you sure?"
@@ -75,13 +75,15 @@ const approvedTableAction = (props) => ({
         okText="Yes"
         cancelText="No"
       >
-        <Button type="danger" icon="delete">Delete</Button>
+        <Button type="danger" icon="delete">
+          Delete
+        </Button>
       </Popconfirm>
     </ActionSpan>
-  )
-});
+  ),
+})
 
-const unapprovedTableAction = (props) => ({
+const unapprovedTableAction = props => ({
   title: 'Action',
   key: 'action',
   width: 250,
@@ -93,7 +95,9 @@ const unapprovedTableAction = (props) => ({
         okText="Yes"
         cancelText="No"
       >
-        <Button type="danger" icon="close">Unapproved</Button>
+        <Button type="danger" icon="close">
+          Unapproved
+        </Button>
       </Popconfirm>
       <Popconfirm
         title="Are you sure?"
@@ -101,24 +105,34 @@ const unapprovedTableAction = (props) => ({
         okText="Yes"
         cancelText="No"
       >
-        <Button type="danger" icon="delete">Delete</Button>
+        <Button type="danger" icon="delete">
+          Delete
+        </Button>
       </Popconfirm>
     </ActionSpan>
-  )
-});
+  ),
+})
 
 const Affiliate = props => (
   <div>
     <h1>Affiliate</h1>
     <TableSection>
       <SectionTitle>Unapproved Affiliate</SectionTitle>
-      <AffiliateTable loading={props.isLoading} data={props.unapprovedAffiliate} action={approvedTableAction(props)} />
+      <AffiliateTable
+        loading={props.isLoading}
+        data={props.unapprovedAffiliate}
+        action={approvedTableAction(props)}
+      />
     </TableSection>
     <TableSection>
       <SectionTitle>Approved Affiliate</SectionTitle>
-      <AffiliateTable loading={props.isLoading} data={props.approvedAffiliate} action={unapprovedTableAction(props)} />
+      <AffiliateTable
+        loading={props.isLoading}
+        data={props.approvedAffiliate}
+        action={unapprovedTableAction(props)}
+      />
     </TableSection>
   </div>
-);
+)
 
-export default enhance(Affiliate);
+export default enhance(Affiliate)

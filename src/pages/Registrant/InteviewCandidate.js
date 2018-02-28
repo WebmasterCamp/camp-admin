@@ -1,48 +1,54 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { compose, lifecycle, withProps } from 'recompose';
-import { Tabs, Icon } from 'antd';
+import React from 'react'
+import { connect } from 'react-redux'
+import { compose, lifecycle, withProps } from 'recompose'
+import { Tabs, Icon } from 'antd'
 
-import { actions as registrantActions } from '../../ducks/registrant';
-import RegistrantTable from '../../components/Registrant/RegistrantTable';
+import { actions as registrantActions } from '../../ducks/registrant'
+import RegistrantTable from '../../components/Registrant/RegistrantTable'
 
-const TabPane = Tabs.TabPane;
+const TabPane = Tabs.TabPane
 
 const mapUserToTableData = user => ({
   key: user._id,
   id: user._id,
-  fullname: user.title + "" + user.firstName + " " + user.lastName,
-  email: user.email
-});
+  fullname: user.title + '' + user.firstName + ' ' + user.lastName,
+  email: user.email,
+})
 
 const enhance = compose(
   connect(
     state => ({
       interviewCandidate: state.registrant.interviewCandidate,
-      isLoading: state.registrant.isLoadingInterviewCandidate
+      isLoading: state.registrant.isLoadingInterviewCandidate,
     }),
-    {...registrantActions}
+    { ...registrantActions },
   ),
-  withProps(
-    props => ({
-      content: props.interviewCandidate.content ? props.interviewCandidate.content.map(mapUserToTableData) : [],
-      design: props.interviewCandidate.design ? props.interviewCandidate.design.map(mapUserToTableData) : [],
-      marketing: props.interviewCandidate.marketing ? props.interviewCandidate.marketing.map(mapUserToTableData) : [],
-      programming: props.interviewCandidate.programming ? props.interviewCandidate.programming.map(mapUserToTableData) : [],
-    })
-  ),
+  withProps(props => ({
+    content: props.interviewCandidate.content
+      ? props.interviewCandidate.content.map(mapUserToTableData)
+      : [],
+    design: props.interviewCandidate.design
+      ? props.interviewCandidate.design.map(mapUserToTableData)
+      : [],
+    marketing: props.interviewCandidate.marketing
+      ? props.interviewCandidate.marketing.map(mapUserToTableData)
+      : [],
+    programming: props.interviewCandidate.programming
+      ? props.interviewCandidate.programming.map(mapUserToTableData)
+      : [],
+  })),
   lifecycle({
     componentDidMount() {
-      this.props.getCandidateList();
-    }
-  })
-);
+      this.props.getCandidateList()
+    },
+  }),
+)
 
 const InterviewCandidate = props => {
   if (props.isLoading) {
     return <Icon type="loading" />
   }
-  const { content, design, marketing, programming } = props;
+  const { content, design, marketing, programming } = props
   return (
     <div>
       <Tabs>
@@ -60,7 +66,7 @@ const InterviewCandidate = props => {
         </TabPane>
       </Tabs>
     </div>
-  );
-};
+  )
+}
 
-export default enhance(InterviewCandidate);
+export default enhance(InterviewCandidate)

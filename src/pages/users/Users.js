@@ -1,43 +1,45 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
-import { Tabs } from 'antd';
-import { compose, lifecycle, withProps, mapProps } from 'recompose';
+import React from 'react'
+import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
+import { Tabs } from 'antd'
+import { compose, lifecycle, withProps, mapProps } from 'recompose'
 
-import UserTable from '../../components/User/UserTable';
-import { actions as userActions } from '../../ducks/user';
+import UserTable from '../../components/User/UserTable'
+import { actions as userActions } from '../../ducks/user'
 const enhance = compose(
   connect(
     state => ({
       users: state.user.users,
     }),
-    { ...userActions, push }
+    { ...userActions, push },
   ),
-  mapProps(
-    ownProps => ({
-      getUserList: ownProps.getUserList,
-      push: ownProps.push,
-      completedUsers: ownProps.users.filter(user => user.status === 'completed'),
-      pendingUsers: ownProps.users.filter(user => user.status === 'in progress')
-    })
-  ),
-  withProps(
-    ownProps => ({
-      programming: ownProps.completedUsers.filter(user => user.major === 'programming'),
-      design: ownProps.completedUsers.filter(user => user.major === 'design'),
-      marketing: ownProps.completedUsers.filter(user => user.major === 'marketing'),
-      content: ownProps.completedUsers.filter(user => user.major === 'content'),
-      notConfirm: ownProps.pendingUsers.filter(user => user.completed.filter(done => !done).length === 0)
-    })
-  ),
+  mapProps(ownProps => ({
+    getUserList: ownProps.getUserList,
+    push: ownProps.push,
+    completedUsers: ownProps.users.filter(user => user.status === 'completed'),
+    pendingUsers: ownProps.users.filter(user => user.status === 'in progress'),
+  })),
+  withProps(ownProps => ({
+    programming: ownProps.completedUsers.filter(
+      user => user.major === 'programming',
+    ),
+    design: ownProps.completedUsers.filter(user => user.major === 'design'),
+    marketing: ownProps.completedUsers.filter(
+      user => user.major === 'marketing',
+    ),
+    content: ownProps.completedUsers.filter(user => user.major === 'content'),
+    notConfirm: ownProps.pendingUsers.filter(
+      user => user.completed.filter(done => !done).length === 0,
+    ),
+  })),
   lifecycle({
     componentDidMount() {
-      this.props.getUserList();
-    }
-  })
-);
+      this.props.getUserList()
+    },
+  }),
+)
 
-const TabPane = Tabs.TabPane;
+const TabPane = Tabs.TabPane
 
 const data = [
   {
@@ -47,7 +49,7 @@ const data = [
     fullname: 'benz',
     email: 'benz@gmail.com',
     status: 'Done',
-    role: 'Admin'
+    role: 'Admin',
   },
   {
     key: 2,
@@ -56,13 +58,12 @@ const data = [
     fullname: 'Jitta',
     email: 'benz@gmail.com',
     status: 'Done',
-    role: 'Judge in Designer'
-  }
-];
-
+    role: 'Judge in Designer',
+  },
+]
 
 const Users = props => {
-  console.log(props);
+  console.log(props)
   return (
     <div>
       <Tabs>
@@ -86,7 +87,7 @@ const Users = props => {
         </TabPane>
       </Tabs>
     </div>
-  );
+  )
 }
 
-export default enhance(Users);
+export default enhance(Users)

@@ -1,13 +1,13 @@
-import React from 'react';
-import { Card, Col, Tag } from 'antd';
-import styled from 'styled-components';
-import moment from 'moment';
-import { getImagePath, majorAsText } from '../../utils/helpers';
+import React from 'react'
+import { Card, Col, Tag } from 'antd'
+import styled from 'styled-components'
+import moment from 'moment'
+import { getImagePath, majorAsText } from '../../utils/helpers'
 
 const Label = styled.p`
   font-size: 16px;
   font-weight: bold;
-`;
+`
 
 const Question = styled.span`
   font-size: 15px;
@@ -15,12 +15,12 @@ const Question = styled.span`
   margin-right: 5px;
   margin-bottom: 4px;
   white-space: pre-line;
-`;
+`
 
 const Answer = styled.span`
   font-size: 16px;
   white-space: pre-line;
-`;
+`
 
 const AvatarImage = styled.div`
   background-image: url('${props => `${getImagePath(props.image)}`}');
@@ -29,10 +29,10 @@ const AvatarImage = styled.div`
   width: 180px;
   height: 180px;
   background-repeat: no-repeat;
-`;
+`
 
 const RegistrantProfile = props => {
-  const { showFacebook = false } = props;
+  const { showFacebook = false } = props
   return (
     <div>
       <Card loading={props.isLoading} noHovering>
@@ -40,8 +40,14 @@ const RegistrantProfile = props => {
           <AvatarImage image={props.picture} />
         </Col>
         <Col span={8}>
-          <Tag color="#108ee9">{props.status === 'in progress' ? 'Pending' : majorAsText(props.major)}</Tag>
-          <Label style={{ marginTop: 8 }}>{`${props.title}${props.firstName} ${props.lastName}`}</Label>
+          <Tag color="#108ee9">
+            {props.status === 'in progress'
+              ? 'Pending'
+              : majorAsText(props.major)}
+          </Tag>
+          <Label style={{ marginTop: 8 }}>{`${props.title}${props.firstName} ${
+            props.lastName
+          }`}</Label>
           <Label>{`${props.firstNameEN} ${props.lastNameEN}`}</Label>
           <p style={{ marginTop: 10 }}>
             <Question>ชื่อเล่น: </Question>
@@ -54,7 +60,14 @@ const RegistrantProfile = props => {
           {showFacebook && (
             <p>
               <Question>Facebook: </Question>
-              <Answer><a href={`https://www.facebook.com/${props.facebook}`} target="_blank">ดูเฟสบุ๊คน้อง</a></Answer>
+              <Answer>
+                <a
+                  href={`https://www.facebook.com/${props.facebook}`}
+                  target="_blank"
+                >
+                  ดูเฟสบุ๊คน้อง
+                </a>
+              </Answer>
             </p>
           )}
         </Col>
@@ -170,11 +183,15 @@ const RegistrantProfile = props => {
           <Question>รู้จักค่ายได้ผ่านช่องทางไหน: </Question>
           <Answer>{props.knowCamp.join(', ')}</Answer>
         </p>
-        <p><Question>กิจกรรมและความสามารถพิเศษ</Question></p>
-        <p><Answer>{props.activities}</Answer></p>
+        <p>
+          <Question>กิจกรรมและความสามารถพิเศษ</Question>
+        </p>
+        <p>
+          <Answer>{props.activities}</Answer>
+        </p>
       </Card>
     </div>
-  );
+  )
 }
 
-export default RegistrantProfile;
+export default RegistrantProfile

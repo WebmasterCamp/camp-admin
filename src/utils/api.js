@@ -1,34 +1,33 @@
-import axios from 'axios';
-import config from '../config';
+import axios from 'axios'
+import config from '../config'
 
 function createApiInstance() {
   return axios.create({
     baseURL: config.apiPath,
     headers: {
-      'x-access-token': window.localStorage.getItem('ywc15AdminToken') || ''
-    }
-  });
+      'x-access-token': window.localStorage.getItem('ywc15AdminToken') || '',
+    },
+  })
 }
 
 function handleResponse(response) {
   if (response.data) {
-    return response;
+    return response
   }
-  return Promise.reject(response.error);
+  return Promise.reject(response.error)
 }
 
 function catchError(e) {
-  return Promise.reject(e.response.data);
+  return Promise.reject(e.response.data)
 }
 
 export default {
-  get: path => (
+  get: path =>
     createApiInstance()
       .get(path)
       .then(handleResponse)
-      .catch(catchError)
-  ),
-  post: (path, body = {}, headers = {}) => (
+      .catch(catchError),
+  post: (path, body = {}, headers = {}) =>
     createApiInstance()
       .request({
         url: path,
@@ -37,9 +36,8 @@ export default {
         data: body,
       })
       .then(handleResponse)
-      .catch(catchError)
-  ),
-  put: (path, body = {}) => (
+      .catch(catchError),
+  put: (path, body = {}) =>
     createApiInstance()
       .request({
         url: path,
@@ -47,9 +45,8 @@ export default {
         data: body,
       })
       .then(handleResponse)
-      .catch(catchError)
-  ),
-  delete: (path, body = {}) => (
+      .catch(catchError),
+  delete: (path, body = {}) =>
     createApiInstance()
       .request({
         url: path,
@@ -57,6 +54,5 @@ export default {
         data: body,
       })
       .then(handleResponse)
-      .catch(catchError)
-  ),
-};
+      .catch(catchError),
+}

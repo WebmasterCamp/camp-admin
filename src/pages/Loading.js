@@ -1,5 +1,5 @@
-import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import React from 'react'
+import styled, { keyframes } from 'styled-components'
 
 const bounce = keyframes`
   0%, 100% { 
@@ -7,15 +7,15 @@ const bounce = keyframes`
   } 50% { 
     transform: scale(1.0);
   }
-`;
+`
 
 const Spinner = styled.div`
   width: 40px;
   height: 40px;
   position: relative;
   margin: 100px auto;
-  animation: ${bounce} 2.0s infinite ease-in-out;
-`;
+  animation: ${bounce} 2s infinite ease-in-out;
+`
 
 const Bouncer = styled.div`
   width: 100%;
@@ -26,24 +26,24 @@ const Bouncer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  animation: ${bounce} 2.0s infinite ease-in-out;
-  ${props => props.second && 'animation-delay: -1.0s;'}
-`;
+  animation: ${bounce} 2s infinite ease-in-out;
+  ${props => props.second && 'animation-delay: -1.0s;'};
+`
 
 const Container = styled.div`
   display: flex;
   background-color: #404040;
   height: 100%;
   align-items: center;
-`;
+`
 
 const Loading = props => (
   <Container>
     <Spinner>
-      <Bouncer></Bouncer>
-      <Bouncer second></Bouncer>
+      <Bouncer />
+      <Bouncer second />
     </Spinner>
   </Container>
-);
+)
 
-export default Loading;
+export default Loading

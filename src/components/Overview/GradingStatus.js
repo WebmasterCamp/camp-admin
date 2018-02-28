@@ -1,35 +1,44 @@
-import React from 'react';
-import { Col, Row, Progress as _Progress } from 'antd';
-import styled from 'styled-components';
+import React from 'react'
+import { Col, Row, Progress as _Progress } from 'antd'
+import styled from 'styled-components'
 
 const StageTitle = styled.h3`
   margin-bottom: 15px;
-`;
+`
 
 const GradingStatusCol = styled(Col)`
   text-align: center;
-`;
+`
 
 const GradingStatusRow = styled(Row)`
   margin-bottom: 30px;
-`;
+`
 
 const Progress = styled(_Progress)`
   .ant-progress-text {
     font-size: 20px;
   }
-`;
+`
 
 const Label = styled.p`
   font-weight: bold;
   padding-top: 10px;
-`;
+`
 
-const getPercentage = (stat, key) => (key ? stat.graded[key] : stat.graded) * 100/stat.all;
-const getText = (stat, key) => `${key ? stat.graded[key] : stat.graded}/${stat.all}`;
+const getPercentage = (stat, key) =>
+  (key ? stat.graded[key] : stat.graded) * 100 / stat.all
+const getText = (stat, key) =>
+  `${key ? stat.graded[key] : stat.graded}/${stat.all}`
 
 const GradingStatus = props => {
-  const { stageOne, stageTwo, programming, design, marketing, content } = props.gradingStat;
+  const {
+    stageOne,
+    stageTwo,
+    programming,
+    design,
+    marketing,
+    content,
+  } = props.gradingStat
   return (
     <div>
       <StageTitle>Stage One</StageTitle>
@@ -109,7 +118,7 @@ const GradingStatus = props => {
         ))}
       </GradingStatusRow>
     </div>
-  );
-};
+  )
+}
 
-export default GradingStatus;
+export default GradingStatus
